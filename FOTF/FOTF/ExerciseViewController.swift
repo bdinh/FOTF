@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  ExerciseViewController.swift
 //  FOTF
 //
 //  Created by Sabrina Niklaus on 5/18/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class ExerciseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

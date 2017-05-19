@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  FoodViewController.swift
 //  FOTF
 //
 //  Created by Sabrina Niklaus on 5/18/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class FoodViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
