@@ -1,27 +1,17 @@
 //
-//  AccountViewController.swift
+//  GoalViewController.swift
 //  FOTF
 //
-//  Created by Sabrina Niklaus on 5/18/17.
+//  Created by Bao Dinh on 5/19/17.
 //  Copyright © 2017 info-449. All rights reserved.
 //
 
 import UIKit
 
-class AccountViewController: UIViewController {
+class GoalViewController: UIViewController {
 
-    
-    @IBOutlet weak var profilePicture: UIImageView!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        profilePicture.layer.borderWidth = 2
-        profilePicture.layer.masksToBounds = false
-        profilePicture.layer.borderColor = UIColor.white.cgColor
-        profilePicture.layer.cornerRadius = profilePicture.frame.height/2
-        profilePicture.clipsToBounds = true
 
         // Do any additional setup after loading the view.
     }

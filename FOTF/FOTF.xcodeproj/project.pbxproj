@@ -18,6 +18,9 @@
 		6D34A24E1ECE6E8800F7CCA1 /* FOTFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34A24D1ECE6E8800F7CCA1 /* FOTFTests.swift */; };
 		6D34A2591ECE709F00F7CCA1 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34A2581ECE709F00F7CCA1 /* AccountViewController.swift */; };
 		6D4AB84A1ECE7AA000D2021B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D4AB8491ECE7AA000D2021B /* GoogleService-Info.plist */; };
+		E3FF60391ECEA8F0002CD4F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FF60381ECEA8F0002CD4F4 /* LoginViewController.swift */; };
+		E3FF603C1ECEA979002CD4F4 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FF603B1ECEA979002CD4F4 /* LoginTextField.swift */; };
+		E3FF603E1ECED0C4002CD4F4 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FF603D1ECED0C4002CD4F4 /* GoalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 		6D4AB8491ECE7AA000D2021B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		824F4D912E6DF6E757212FFB /* Pods-FOTFTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTFTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FOTFTests/Pods-FOTFTests.release.xcconfig"; sourceTree = "<group>"; };
 		C09E9C8D81947AECB4B4FE96 /* Pods_FOTF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FOTF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3FF60381ECEA8F0002CD4F4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E3FF603B1ECEA979002CD4F4 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
+		E3FF603D1ECED0C4002CD4F4 /* GoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +110,9 @@
 		6D34A2351ECE6E8800F7CCA1 /* FOTF */ = {
 			isa = PBXGroup;
 			children = (
+				E3FF603A1ECEA91C002CD4F4 /* ViewControllers */,
 				6D34A2361ECE6E8800F7CCA1 /* AppDelegate.swift */,
-				6D34A2381ECE6E8800F7CCA1 /* FoodViewController.swift */,
-				6D34A23A1ECE6E8800F7CCA1 /* ExerciseViewController.swift */,
-				6D34A2581ECE709F00F7CCA1 /* AccountViewController.swift */,
+				E3FF603F1ECEDC06002CD4F4 /* UIClasses */,
 				6D34A23C1ECE6E8800F7CCA1 /* Main.storyboard */,
 				6D34A23F1ECE6E8800F7CCA1 /* Assets.xcassets */,
 				6D34A2411ECE6E8800F7CCA1 /* LaunchScreen.storyboard */,
@@ -135,6 +140,26 @@
 				824F4D912E6DF6E757212FFB /* Pods-FOTFTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E3FF603A1ECEA91C002CD4F4 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E3FF60381ECEA8F0002CD4F4 /* LoginViewController.swift */,
+				6D34A2381ECE6E8800F7CCA1 /* FoodViewController.swift */,
+				6D34A23A1ECE6E8800F7CCA1 /* ExerciseViewController.swift */,
+				6D34A2581ECE709F00F7CCA1 /* AccountViewController.swift */,
+				E3FF603D1ECED0C4002CD4F4 /* GoalViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E3FF603F1ECEDC06002CD4F4 /* UIClasses */ = {
+			isa = PBXGroup;
+			children = (
+				E3FF603B1ECEA979002CD4F4 /* LoginTextField.swift */,
+			);
+			name = UIClasses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,9 +365,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3FF603E1ECED0C4002CD4F4 /* GoalViewController.swift in Sources */,
 				6D34A23B1ECE6E8800F7CCA1 /* ExerciseViewController.swift in Sources */,
 				6D34A2371ECE6E8800F7CCA1 /* AppDelegate.swift in Sources */,
 				6D34A2591ECE709F00F7CCA1 /* AccountViewController.swift in Sources */,
+				E3FF603C1ECEA979002CD4F4 /* LoginTextField.swift in Sources */,
+				E3FF60391ECEA8F0002CD4F4 /* LoginViewController.swift in Sources */,
 				6D34A2391ECE6E8800F7CCA1 /* FoodViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
