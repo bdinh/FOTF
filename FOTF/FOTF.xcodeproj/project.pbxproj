@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		134066092CEEBF826E7D9D0C /* Pods_FOTF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09E9C8D81947AECB4B4FE96 /* Pods_FOTF.framework */; };
+		4F59A3B47917FF02D587BD93 /* Pods_FOTFTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F37F85C6540F8C693422EFB /* Pods_FOTFTests.framework */; };
 		6D34A2371ECE6E8800F7CCA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34A2361ECE6E8800F7CCA1 /* AppDelegate.swift */; };
 		6D34A2391ECE6E8800F7CCA1 /* FoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34A2381ECE6E8800F7CCA1 /* FoodViewController.swift */; };
 		6D34A23B1ECE6E8800F7CCA1 /* ExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34A23A1ECE6E8800F7CCA1 /* ExerciseViewController.swift */; };
@@ -15,6 +17,7 @@
 		6D34A2431ECE6E8800F7CCA1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D34A2411ECE6E8800F7CCA1 /* LaunchScreen.storyboard */; };
 		6D34A24E1ECE6E8800F7CCA1 /* FOTFTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34A24D1ECE6E8800F7CCA1 /* FOTFTests.swift */; };
 		6D34A2591ECE709F00F7CCA1 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D34A2581ECE709F00F7CCA1 /* AccountViewController.swift */; };
+		6D4AB84A1ECE7AA000D2021B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6D4AB8491ECE7AA000D2021B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +31,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0DB75BCDA3B43CE990EC48AA /* Pods-FOTFTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTFTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FOTFTests/Pods-FOTFTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2F37F85C6540F8C693422EFB /* Pods_FOTFTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FOTFTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		30A06DD6734BB825B7C16E92 /* Pods-FOTF.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTF.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FOTF/Pods-FOTF.debug.xcconfig"; sourceTree = "<group>"; };
+		5B40344CDAE4BE6D7F73E0DD /* Pods-FOTF.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTF.release.xcconfig"; path = "Pods/Target Support Files/Pods-FOTF/Pods-FOTF.release.xcconfig"; sourceTree = "<group>"; };
 		6D34A2331ECE6E8800F7CCA1 /* FOTF.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FOTF.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D34A2361ECE6E8800F7CCA1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D34A2381ECE6E8800F7CCA1 /* FoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewController.swift; sourceTree = "<group>"; };
@@ -40,6 +47,9 @@
 		6D34A24D1ECE6E8800F7CCA1 /* FOTFTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FOTFTests.swift; sourceTree = "<group>"; };
 		6D34A24F1ECE6E8800F7CCA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6D34A2581ECE709F00F7CCA1 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		6D4AB8491ECE7AA000D2021B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		824F4D912E6DF6E757212FFB /* Pods-FOTFTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTFTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FOTFTests/Pods-FOTFTests.release.xcconfig"; sourceTree = "<group>"; };
+		C09E9C8D81947AECB4B4FE96 /* Pods_FOTF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FOTF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				134066092CEEBF826E7D9D0C /* Pods_FOTF.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,18 +65,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F59A3B47917FF02D587BD93 /* Pods_FOTFTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0FC1D45A8D942890B028519B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C09E9C8D81947AECB4B4FE96 /* Pods_FOTF.framework */,
+				2F37F85C6540F8C693422EFB /* Pods_FOTFTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6D34A22A1ECE6E8700F7CCA1 = {
 			isa = PBXGroup;
 			children = (
 				6D34A2351ECE6E8800F7CCA1 /* FOTF */,
 				6D34A24C1ECE6E8800F7CCA1 /* FOTFTests */,
 				6D34A2341ECE6E8800F7CCA1 /* Products */,
+				84048455AD20474119927B9C /* Pods */,
+				0FC1D45A8D942890B028519B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,6 +111,7 @@
 				6D34A23C1ECE6E8800F7CCA1 /* Main.storyboard */,
 				6D34A23F1ECE6E8800F7CCA1 /* Assets.xcassets */,
 				6D34A2411ECE6E8800F7CCA1 /* LaunchScreen.storyboard */,
+				6D4AB8491ECE7AA000D2021B /* GoogleService-Info.plist */,
 				6D34A2441ECE6E8800F7CCA1 /* Info.plist */,
 			);
 			path = FOTF;
@@ -102,6 +126,17 @@
 			path = FOTFTests;
 			sourceTree = "<group>";
 		};
+		84048455AD20474119927B9C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				30A06DD6734BB825B7C16E92 /* Pods-FOTF.debug.xcconfig */,
+				5B40344CDAE4BE6D7F73E0DD /* Pods-FOTF.release.xcconfig */,
+				0DB75BCDA3B43CE990EC48AA /* Pods-FOTFTests.debug.xcconfig */,
+				824F4D912E6DF6E757212FFB /* Pods-FOTFTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -109,9 +144,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D34A2521ECE6E8800F7CCA1 /* Build configuration list for PBXNativeTarget "FOTF" */;
 			buildPhases = (
+				8B77A9E28876045C33467BDA /* [CP] Check Pods Manifest.lock */,
 				6D34A22F1ECE6E8700F7CCA1 /* Sources */,
 				6D34A2301ECE6E8700F7CCA1 /* Frameworks */,
 				6D34A2311ECE6E8700F7CCA1 /* Resources */,
+				468D4B58FC7454A630CDA8E0 /* [CP] Embed Pods Frameworks */,
+				ADDA1603AC64AE2A330967F5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -126,9 +164,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D34A2551ECE6E8800F7CCA1 /* Build configuration list for PBXNativeTarget "FOTFTests" */;
 			buildPhases = (
+				589FDF20C48FE3A08BF29033 /* [CP] Check Pods Manifest.lock */,
 				6D34A2451ECE6E8800F7CCA1 /* Sources */,
 				6D34A2461ECE6E8800F7CCA1 /* Frameworks */,
 				6D34A2471ECE6E8800F7CCA1 /* Resources */,
+				7766CF69BD248F36D6FFEC02 /* [CP] Embed Pods Frameworks */,
+				BCE337A6EEF4154759A2C7EB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -186,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D34A2431ECE6E8800F7CCA1 /* LaunchScreen.storyboard in Resources */,
+				6D4AB84A1ECE7AA000D2021B /* GoogleService-Info.plist in Resources */,
 				6D34A2401ECE6E8800F7CCA1 /* Assets.xcassets in Resources */,
 				6D34A23E1ECE6E8800F7CCA1 /* Main.storyboard in Resources */,
 			);
@@ -199,6 +241,99 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		468D4B58FC7454A630CDA8E0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FOTF/Pods-FOTF-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		589FDF20C48FE3A08BF29033 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7766CF69BD248F36D6FFEC02 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FOTFTests/Pods-FOTFTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8B77A9E28876045C33467BDA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ADDA1603AC64AE2A330967F5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FOTF/Pods-FOTF-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BCE337A6EEF4154759A2C7EB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FOTFTests/Pods-FOTFTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6D34A22F1ECE6E8700F7CCA1 /* Sources */ = {
@@ -347,6 +482,7 @@
 		};
 		6D34A2531ECE6E8800F7CCA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30A06DD6734BB825B7C16E92 /* Pods-FOTF.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = FOTF/Info.plist;
@@ -359,6 +495,7 @@
 		};
 		6D34A2541ECE6E8800F7CCA1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B40344CDAE4BE6D7F73E0DD /* Pods-FOTF.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = FOTF/Info.plist;
@@ -371,6 +508,7 @@
 		};
 		6D34A2561ECE6E8800F7CCA1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0DB75BCDA3B43CE990EC48AA /* Pods-FOTFTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -385,6 +523,7 @@
 		};
 		6D34A2571ECE6E8800F7CCA1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 824F4D912E6DF6E757212FFB /* Pods-FOTFTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -416,6 +555,7 @@
 				6D34A2541ECE6E8800F7CCA1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6D34A2551ECE6E8800F7CCA1 /* Build configuration list for PBXNativeTarget "FOTFTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +564,7 @@
 				6D34A2571ECE6E8800F7CCA1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

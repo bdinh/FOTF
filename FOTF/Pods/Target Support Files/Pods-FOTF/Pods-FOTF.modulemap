@@ -1,0 +1,6 @@
+framework module Pods_FOTF {
+  umbrella header "Pods-FOTF-umbrella.h"
+
+  export *
+  module * { export * }
+}
