@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 
 //extension UIColor {
@@ -27,9 +29,79 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginQuote: UILabel!
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var password: UITextField!
     
     @IBOutlet weak var createAccountButton: UIButton!
     
+    // source: http://www.appcoda.com/firebase-login-signup/
+    @IBAction func createAccountAction(_ sender: AnyObject) {
+        
+        if userName.text == "" {
+            let alertController = UIAlertController(title: "Error", message: "Please enter your email and password", preferredStyle: .alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            present(alertController, animated: true, completion: nil)
+            
+        } else {
+            Auth.auth().createUser(withEmail: userName.text!, password: password.text!) { (user, error) in
+                
+                if error == nil {
+                    print("You have successfully signed up")
+                    
+                    self.performSegue(withIdentifier: "loginSegue", sender: sender)
+                    
+                } else {
+                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                    
+                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(defaultAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    // source: http://www.appcoda.com/firebase-login-signup/
+    @IBAction func loginAction(_ sender: AnyObject) {
+        
+        if self.userName.text == "" || self.password.text == "" {
+            
+            //Alert to tell the user that there was an error because they didn't fill anything in the textfields because they didn't fill anything in
+            
+            let alertController = UIAlertController(title: "Error", message: "Please enter an email and password.", preferredStyle: .alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+            
+        } else {
+            
+            Auth.auth().signIn(withEmail: self.userName.text!, password: self.password.text!) { (user, error) in
+                
+                if error == nil {
+                    
+                    //Print into the console if successfully logged in
+                    print("You have successfully logged in")
+                    
+                    self.performSegue(withIdentifier: "loginSegue", sender: sender)
+                    
+                } else {
+                    
+                    //Tells the user that there is an error and then gets firebase to tell them the error
+                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                    
+                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(defaultAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +142,7 @@ class LoginViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+ */
+    
 
 }
