@@ -13,12 +13,13 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var jsonResponse: NSDictionary!
     let apiID: String = "d09f36f1"
     let apiKey: String = "fc4200e582f9de3d0b19ef0716196032"
+    
     // not connected to anything
     @IBOutlet weak var searchField: UITextField!
     
     // not connected to anything 
     @IBAction func searchClicked(_ sender: UIButton) {
-        let searchString = searchField.text!
+        let query = searchField.text!
         let request = NSMutableURLRequest(url: NSURL(string: "https://api.nutritionix.com/v1_1/search/")! as URL)
         let session = URLSession.shared
         request.httpMethod = "POST"
@@ -28,7 +29,7 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
             "appKey" : apiKey,
             "fields" : ["item_name", "brand_name", "keywords", "usda_fields"],
             "limit" : "50",
-            "query" : searchString,
+            "query" : query,
             "filters" : ["exists" :["usda_fields": true]]] as [String : Any]
         
         var _: NSError?
