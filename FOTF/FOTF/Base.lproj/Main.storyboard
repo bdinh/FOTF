@@ -32,10 +32,10 @@
             </objects>
             <point key="canvasLocation" x="-103" y="-990"/>
         </scene>
-        <!--Account View-->
+        <!--AccountView-->
         <scene sceneID="Ere-Ya-qaZ">
             <objects>
-                <viewController title="Account View" id="Rl9-2A-7hi" customClass="AccountViewController" customModule="FOTF" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="AccountView" id="Rl9-2A-7hi" customClass="AccountViewController" customModule="FOTF" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9rX-Cd-ZQM"/>
                         <viewControllerLayoutGuide type="bottom" id="9xc-h4-mil"/>
@@ -103,6 +103,9 @@
                                 <state key="normal" title="Sign out">
                                     <color key="titleColor" red="0.39607843139999999" green="0.43137254899999999" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="signOutAction:" destination="Rl9-2A-7hi" eventType="touchUpInside" id="SI3-U0-r2r"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="appleHQ" translatesAutoresizingMaskIntoConstraints="NO" id="hpJ-5T-yud">
                                 <rect key="frame" x="0.0" y="64" width="375" height="110"/>
@@ -138,10 +141,10 @@
             </objects>
             <point key="canvasLocation" x="1484" y="-991"/>
         </scene>
-        <!--Login View Controller-->
+        <!--LoginView-->
         <scene sceneID="cuT-aV-G2S">
             <objects>
-                <viewController id="JIV-4T-I9e" customClass="LoginViewController" customModule="FOTF" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginView" title="LoginView" id="JIV-4T-I9e" customClass="LoginViewController" customModule="FOTF" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hlk-BJ-ifW"/>
                         <viewControllerLayoutGuide type="bottom" id="YS9-7K-G1v"/>
@@ -191,6 +194,9 @@
                                 <state key="normal" title="Login">
                                     <color key="titleColor" red="0.396078431372549" green="0.43137254901960786" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="loginAction:" destination="JIV-4T-I9e" eventType="touchUpInside" id="7fC-qL-OQ6"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KoN-8K-jB8">
                                 <rect key="frame" x="159" y="558" width="0.0" height="0.0"/>
@@ -207,6 +213,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
+                                    <action selector="createAccountAction:" destination="JIV-4T-I9e" eventType="touchUpInside" id="WsT-wK-Xqg"/>
                                     <segue destination="49e-Tb-3d3" kind="presentation" id="x4H-5R-v3y"/>
                                 </connections>
                             </button>
@@ -218,6 +225,7 @@
                         <outlet property="loginButton" destination="o1r-dq-UZI" id="sQ9-xB-bBG"/>
                         <outlet property="loginQuote" destination="gIO-0H-dn4" id="XPp-lf-44Q"/>
                         <outlet property="loginTitle" destination="AYe-Wz-Qhk" id="ifW-gW-TNt"/>
+                        <outlet property="password" destination="xod-Yt-aLC" id="ufh-LK-g5k"/>
                         <outlet property="userName" destination="xBs-0a-i1i" id="q57-2G-1Oe"/>
                         <segue destination="49e-Tb-3d3" kind="presentation" identifier="loginSegue" id="d5c-iK-YeY"/>
                     </connections>
@@ -542,6 +550,6 @@
         <image name="cycling" width="434" height="275"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="x4H-5R-v3y"/>
+        <segue reference="d5c-iK-YeY"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -7,12 +7,12 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class AccountViewController: UIViewController {
 
-    
     @IBOutlet weak var profilePicture: UIImageView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +24,22 @@ class AccountViewController: UIViewController {
         profilePicture.clipsToBounds = true
 
         // Do any additional setup after loading the view.
+        let currentUser = Auth.auth().currentUser
+        print(currentUser)
+    }
+    
+    // source: http://www.appcoda.com/firebase-login-signup/
+    @IBAction func signOutAction(_ sender: UIButton) {
+        if Auth.auth().currentUser != nil {
+            do {
+                try Auth.auth().signOut()
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginView")
+                present(vc, animated: true, completion: nil)
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
