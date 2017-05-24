@@ -8,7 +8,21 @@
 
 import UIKit
 
-class FoodViewController: UIViewController {
+class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // will have it based on dates
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

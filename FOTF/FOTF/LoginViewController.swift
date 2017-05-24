@@ -25,6 +25,7 @@ import FirebaseAuth
 class LoginViewController: UIViewController {
     
     
+    
     @IBOutlet weak var loginTitle: UILabel!
     @IBOutlet weak var loginQuote: UILabel!
     @IBOutlet weak var userName: UITextField!
