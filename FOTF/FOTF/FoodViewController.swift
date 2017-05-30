@@ -8,13 +8,22 @@
 
 import UIKit
 import Alamofire
+import FirebaseDatabase
 
 class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
+    
     
     var jsonResponse: NSDictionary = [:]
     var searchResults: [Food] = []//[String: [String:Any]] = [:]
     let apiID: String = "d09f36f1"
     let apiKey: String = "fc4200e582f9de3d0b19ef0716196032"
+    var entryData = [String]()
+    var ref: DatabaseReference?
+    var databaseHandle: DatabaseHandle?
+    
+    @IBOutlet weak var foodTableView: UITableView!
+    
+    
     
     func attemptRequest(query: String) {
         let parameters = [
@@ -74,23 +83,57 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
         print(self.searchResults)
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // will have it based on dates
-        return 1
-    }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return entryData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = foodTableView.dequeueReusableCell(withIdentifier: "foodEntryCell")
+        cell?.textLabel?.text = entryData[indexPath.row]
+        return cell!
         
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            // remove from firebase
+//            entryData.remove(at: indexPath.row)
+//            
+//            let entry = self.entryData[indexPath.row]
+//                
+//            
+//            Database.database().reference().child("foodEntry").child(<#T##pathString: String##String#>)
+//            foodTableView.reloadData()
+        }
+    }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.attemptRequest(query: "apple")
+        
+        foodTableView.delegate = self
+        foodTableView.dataSource = self
+        
+        
+        ref = Database.database().reference()
+        databaseHandle = ref?.child("foodEntry").observe(.childAdded, with: { (snapshot) in
+            let entry = snapshot.value as? String
+            
+            if let actualEntry = entry {
+                self.entryData.append(actualEntry)
+                self.foodTableView.reloadData()
+            }
+
+        })
+        
+//        
+//        retrieveDataFromDatabase(ref!)
+        
+        print(searchResults)
+        foodTableView.reloadData()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -100,5 +143,11 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
 
+//    func retrieveDataFromDatabase(reference: DatabaseReference) {
+//        databaseHandle = reference.child("foodEntry").observe(.childAdded) { (snapshot) in
+//            <#code#>
+//        }
+//        
+//    }
 }
 
