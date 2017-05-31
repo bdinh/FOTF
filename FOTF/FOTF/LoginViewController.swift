@@ -37,7 +37,28 @@ class LoginViewController: UIViewController {
     // source: http://www.appcoda.com/firebase-login-signup/
     @IBAction func createAccountAction(_ sender: AnyObject) {
         
-        if userName.text == "" {
+        // check if email already exists
+        Auth.auth().fetchProviders(forEmail: userName.text!, completion:{(providers, error) in
+            if error != nil {
+                print(error!)
+            }
+            else{
+                //If there are no errors and there are providers, the email exists
+                if providers != nil{
+                    print("Bad email used for signup")
+                }
+                    //The email does not exist
+                else{
+                    print("it works")
+                    self.signUp(sender) // let signup handle the creation (after this async)
+                }
+            }
+        })
+    }
+    
+    // creates account
+    func signUp(_ sender: AnyObject) {
+        if userName.text == "" || userName.text == "Username" {
             let alertController = UIAlertController(title: "Error", message: "Please enter your email and password", preferredStyle: .alert)
             
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -50,9 +71,7 @@ class LoginViewController: UIViewController {
                 
                 if error == nil {
                     print("You have successfully signed up")
-                    
-                    self.performSegue(withIdentifier: "loginSegue", sender: sender)
-                    
+                    self.loginAction(sender) // let loginAction handle login and segue                    
                 } else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                     
