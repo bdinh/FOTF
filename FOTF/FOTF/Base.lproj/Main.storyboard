@@ -214,7 +214,6 @@
                                 </state>
                                 <connections>
                                     <action selector="createAccountAction:" destination="JIV-4T-I9e" eventType="touchUpInside" id="WsT-wK-Xqg"/>
-                                    <segue destination="49e-Tb-3d3" kind="presentation" id="x4H-5R-v3y"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -573,7 +572,4 @@
         <image name="appleHQ" width="1000" height="500"/>
         <image name="cycling" width="434" height="275"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="d5c-iK-YeY"/>
-    </inferredMetricsTieBreakers>
 </document>
