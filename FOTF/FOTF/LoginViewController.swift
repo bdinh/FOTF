@@ -22,9 +22,12 @@ import FirebaseAuth
 //}
 
 @IBDesignable
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
+    @IBOutlet weak var name: UITextField!
+
+    @IBOutlet weak var age: UITextField!
     
-    
+    @IBOutlet weak var sex: UITextField!
     
     @IBOutlet weak var loginTitle: UILabel!
     @IBOutlet weak var loginQuote: UILabel!
@@ -36,24 +39,29 @@ class LoginViewController: UIViewController {
     
     // source: http://www.appcoda.com/firebase-login-signup/
     @IBAction func createAccountAction(_ sender: AnyObject) {
-        
-        // check if email already exists
-        Auth.auth().fetchProviders(forEmail: userName.text!, completion:{(providers, error) in
-            if error != nil {
-                print(error!)
-            }
-            else{
-                //If there are no errors and there are providers, the email exists
-                if providers != nil{
-                    print("Bad email used for signup")
+        if self.age.isHidden {
+            age.isHidden = false
+            name.isHidden = false
+            sex.isHidden = false
+        } else {
+            // check if email already exists
+            Auth.auth().fetchProviders(forEmail: userName.text!, completion:{(providers, error) in
+                if error != nil {
+                    print(error!)
                 }
-                    //The email does not exist
                 else{
-                    print("it works")
-                    self.signUp(sender) // let signup handle the creation (after this async)
+                    //If there are no errors and there are providers, the email exists
+                    if providers != nil{
+                        print("Bad email used for signup")
+                    }
+                        //The email does not exist
+                    else{
+                        print("it works")
+                        self.signUp(sender) // let signup handle the creation (after this async)
+                    }
                 }
-            }
-        })
+            })
+        }
     }
     
     // creates account
@@ -123,9 +131,18 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
+        return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        age.delegate = self
+        age.keyboardType = .numberPad
+        age.isHidden = true
+        name.isHidden = true
+        sex.isHidden = true
         let gradient: CAGradientLayer = CAGradientLayer()
         let colorTop = UIColor(red: 101.0/255.0, green: 110.0/255.0, blue: 121.0/255.0, alpha: 1.0).cgColor
         let colorBottom = UIColor(red: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0).cgColor

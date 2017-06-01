@@ -216,22 +216,46 @@
                                     <action selector="createAccountAction:" destination="JIV-4T-I9e" eventType="touchUpInside" id="WsT-wK-Xqg"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NTM-A6-KOt">
+                                <rect key="frame" x="30" y="226" width="315" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Age" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wH9-f5-sF5">
+                                <rect key="frame" x="30" y="272" width="315" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Sex" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LBp-Do-fhT">
+                                <rect key="frame" x="30" y="310" width="315" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="age" destination="wH9-f5-sF5" id="2mo-KX-Zqi"/>
                         <outlet property="createAccountButton" destination="M45-ip-Eea" id="6Dl-xC-KhK"/>
                         <outlet property="loginButton" destination="o1r-dq-UZI" id="sQ9-xB-bBG"/>
                         <outlet property="loginQuote" destination="gIO-0H-dn4" id="XPp-lf-44Q"/>
                         <outlet property="loginTitle" destination="AYe-Wz-Qhk" id="ifW-gW-TNt"/>
+                        <outlet property="name" destination="NTM-A6-KOt" id="POQ-Ag-wS0"/>
                         <outlet property="password" destination="xod-Yt-aLC" id="ufh-LK-g5k"/>
+                        <outlet property="sex" destination="LBp-Do-fhT" id="zsl-af-JXx"/>
                         <outlet property="userName" destination="xBs-0a-i1i" id="q57-2G-1Oe"/>
                         <segue destination="49e-Tb-3d3" kind="presentation" identifier="loginSegue" id="d5c-iK-YeY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qCl-pK-yl5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1762" y="0.0"/>
+            <point key="canvasLocation" x="-1762.4000000000001" y="-0.44977511244377816"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
