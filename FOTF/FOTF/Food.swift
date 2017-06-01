@@ -10,11 +10,10 @@ import Foundation
 
 class Food {
     var title: String = ""
-    var usda_fields: [String:Any] = [:]
-
     var calories: String = ""
     var fat: String = ""
     var sodium: String = ""
+    var cholesterol: String = ""
     var sugar: String = ""
     var protein: String = ""
     var servingSize: String = ""

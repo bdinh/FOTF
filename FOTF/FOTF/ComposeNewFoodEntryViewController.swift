@@ -24,7 +24,7 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     
     var ref: DatabaseReference?
     
-    @IBAction func searchFood(_ sender: UIButton) {
+    @IBAction func searchFood(_ sender: Any) {
         self.attemptRequest(query: newEntry.text!)
     }
     
@@ -48,7 +48,7 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
             "appId":apiID,
             "appKey":apiKey,
             "query":query,
-            "fields":["item_name","brand_name","nf_calories","nf_serving_size_qty","nf_serving_size_unit", "nf_total_fat", "nf_sodium", "nf_sugars", "nf_protein"],
+            "fields":["item_name","brand_name","nf_calories","nf_serving_size_qty","nf_serving_size_unit", "nf_total_fat", "nf_sodium", "nf_sugars", "nf_protein", "nf_cholesterol"],
             "sort":[
                 "field":"_score",
                 "order":"desc"
@@ -80,6 +80,7 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
             foodItem.calories = "\(info["nf_calories"]!)"
             foodItem.fat = "\(info["nf_total_fat"]!)"
             foodItem.sodium = "\(info["nf_sodium"]!)"
+            foodItem.cholesterol = "\(info["nf_cholesterol"]!)"
             foodItem.sugar = "\(info["nf_sugars"]!)"
             foodItem.protein = "\(info["nf_protein"]!)"
             foodItem.servingSize = "\(info["nf_serving_size_qty"]!)"
@@ -96,7 +97,7 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = self.searchResults[indexPath.row]
         
-        let alertController = UIAlertController(title: item.title, message: "\(item.servingSize) \(item.servingUnit) \ncalories: \(item.calories) kcal \nfat: \(item.fat) grams \nsodium: \(item.sodium) miligrams \nsugar: \(item.sugar) grams \nprotein: \(item.protein) grams", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alertController = UIAlertController(title: item.title, message: "\(item.servingSize) \(item.servingUnit) \ncalories: \(item.calories) kcal \nfat: \(item.fat) grams \nsodium: \(item.sodium) miligrams \ncholestrol: \(item.cholesterol) miligrams \nsugar: \(item.sugar) grams \nprotein: \(item.protein) grams", preferredStyle: UIAlertControllerStyle.actionSheet)
         
         let OKAction = UIAlertAction(title: "OK", style: .default)
         alertController.addAction(OKAction)
