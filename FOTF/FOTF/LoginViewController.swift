@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 
 
 //extension UIColor {
@@ -44,26 +45,52 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             name.isHidden = false
             sex.isHidden = false
         } else {
-            // check if email already exists
-            Auth.auth().fetchProviders(forEmail: userName.text!, completion:{(providers, error) in
-                if error != nil {
-                    print(error!)
-                }
-                else{
-                    //If there are no errors and there are providers, the email exists
-                    if providers != nil{
-                        print("Bad email used for signup")
+            // check if age, name, and sex are filled in
+            if (checkFilled()) {
+                // check if email already exists
+                Auth.auth().fetchProviders(forEmail: userName.text!, completion:{(providers, error) in
+                    if error != nil {
+                        print(error!)
                     }
-                        //The email does not exist
                     else{
-                        print("it works")
-                        self.signUp(sender) // let signup handle the creation (after this async)
+                        //If there are no errors and there are providers, the email exists
+                        if providers != nil{
+                            let alertController = UIAlertController(title: "Error", message: "Email already in use", preferredStyle: .alert)
+                            
+                            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                            alertController.addAction(defaultAction)
+                            
+                            self.present(alertController, animated: true, completion: nil)
+                            print("Bad email used for signup")
+                        }
+                            //The email does not exist
+                        else{
+                            print("it works")
+                            self.signUp(sender) // let signup handle the creation (after this async)
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                print("age name and sex fields not filled in")
+                let alertController = UIAlertController(title: "Error", message: "Please Enter Name, age, and sex", preferredStyle: .alert)
+                
+                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                alertController.addAction(defaultAction)
+                
+                present(alertController, animated: true, completion: nil)
+            }
         }
     }
     
+    func checkFilled() -> Bool {
+        return (sex.text != "" && name.text != "" && age.text != "")
+    }
+    
+    
+    let apiID: String = "d09f36f1"
+    let apiKey: String = "fc4200e582f9de3d0b19ef0716196032"
+    var ref: DatabaseReference?
+
     // creates account
     func signUp(_ sender: AnyObject) {
         if userName.text == "" || userName.text == "Username" {
@@ -75,11 +102,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             present(alertController, animated: true, completion: nil)
             
         } else {
-            Auth.auth().createUser(withEmail: userName.text!, password: password.text!) { (user, error) in
+            var email = self.userName.text!
+            let password = self.password.text!
+            Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
                 
                 if error == nil {
                     print("You have successfully signed up")
-                    self.loginAction(sender) // let loginAction handle login and segue                    
+                    Auth.auth().signIn(withEmail: email, password: password)
+                    self.ref = Database.database().reference()
+                    let user = User(name: self.name.text!, email: email, age: Int(self.age.text!)!, sex: self.sex.text!)
+                    let users = self.ref?.child("Users")
+                    email = email.replacingOccurrences(of: ".", with: ",")
+                    let newUser = users?.ref.child(email)
+                    newUser?.setValue(user.toAnyObject())
+                    self.performSegue(withIdentifier: "loginSegue", sender: sender)
+                    //self.loginAction(sender) // let loginAction handle login and segue
                 } else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                     
