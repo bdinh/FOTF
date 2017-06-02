@@ -15,6 +15,7 @@ protocol AerobicDelegate {
 class AerobicExerciseViewController: UIViewController {
     var exerciseLog = [Exercise]()
     var delegate: AerobicDelegate?
+    let type:String = "Aerobic"
     
     @IBOutlet weak var exerciseTitle: UITextField!
     @IBOutlet weak var distance: UITextField!
@@ -26,6 +27,7 @@ class AerobicExerciseViewController: UIViewController {
     
     @IBAction func finishCompose(_ sender: Any) {
         let exerciseItem = Exercise()
+        exerciseItem.type = self.type
         exerciseItem.description = exerciseTitle.text!
         exerciseItem.distance = distance.text!
         exerciseItem.duration = duration.text!

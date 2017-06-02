@@ -15,6 +15,7 @@ protocol StrengthDelegate {
 class StrengthExerciseViewController: UIViewController {
     var exerciseLog = [Exercise]()
     var delegate: StrengthDelegate?
+    let type: String = "Strength"
 
     @IBOutlet weak var exerciseTitle: UITextField!
     @IBOutlet weak var weight: UITextField!
@@ -26,6 +27,7 @@ class StrengthExerciseViewController: UIViewController {
     
     @IBAction func finishCompose(_ sender: Any) {
         let exerciseItem = Exercise()
+        exerciseItem.type = self.type
         exerciseItem.description = exerciseTitle.text!
         exerciseItem.reps = reps.text!
         exerciseItem.weight = reps.text!

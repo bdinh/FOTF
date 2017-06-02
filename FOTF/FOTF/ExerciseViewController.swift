@@ -50,8 +50,16 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let exercise = exerciseLog[indexPath.row]
         let cell = exerciseTableView.dequeueReusableCell(withIdentifier: "exerciseCell")
-        cell?.textLabel?.text = exerciseLog[indexPath.row].description
+        cell?.textLabel?.text = exercise.description
+        if exercise.type == "Aerobic" {
+            cell?.detailTextLabel?.text = "\(exercise.duration) minutes"
+            cell?.imageView?.image = #imageLiteral(resourceName: "Running_25")
+        } else {
+            cell?.detailTextLabel?.text = "\(exercise.reps) reps"
+            cell?.imageView?.image = #imageLiteral(resourceName: "strength")
+        }
         return cell!
         
     }
