@@ -13,7 +13,6 @@ protocol StrengthDelegate {
 }
 
 class StrengthExerciseViewController: UIViewController {
-    var exerciseLog = [Exercise]()
     var delegate: StrengthDelegate?
     let type: String = "Strength"
 
@@ -31,7 +30,7 @@ class StrengthExerciseViewController: UIViewController {
             exerciseItem.type = self.type
             exerciseItem.description = exerciseTitle.text!
             exerciseItem.reps = Float(reps.text!)
-            exerciseItem.weight = Float(reps.text!)
+            exerciseItem.weight = Float(weight.text!)
             
             delegate?.finishNewStrength(exercise: exerciseItem)
             presentingViewController?.dismiss(animated: true, completion: nil)

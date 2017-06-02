@@ -13,7 +13,6 @@ protocol AerobicDelegate {
 }
 
 class AerobicExerciseViewController: UIViewController {
-    var exerciseLog = [Exercise]()
     var delegate: AerobicDelegate?
     let type:String = "Aerobic"
     

@@ -10,14 +10,42 @@ import UIKit
 
 class ExerciseViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AerobicDelegate, StrengthDelegate {
     var exerciseLog = [Exercise]()
+    var weeklyStatistics: [String: Float] = [
+        "distance": 0,
+        "minutes": 0,
+        "weight": 0,
+        "reps": 0
+    ]
+    
+    @IBOutlet weak var totalDistance: UILabel!
+    @IBOutlet weak var totalMinutes: UILabel!
+    @IBOutlet weak var maxWeight: UILabel!
+    @IBOutlet weak var maxReps: UILabel!
 
     func finishNewAerobic(exercise newExercise: Exercise) {
+        if newExercise.distance != nil {
+            weeklyStatistics["distance"]! += newExercise.distance!
+        }
+        weeklyStatistics["minutes"]! += newExercise.duration!
+        
+        totalMinutes.text! = "\(weeklyStatistics["minutes"]!) minutes"
+        totalDistance.text! = "\(weeklyStatistics["distance"]!) miles"
+        
         self.exerciseLog.append(newExercise)
         exerciseTableView.reloadData()
     }
     
     func finishNewStrength(exercise newExercise: Exercise) {
-        print("got here")
+        if Float(newExercise.reps!) > weeklyStatistics["reps"]! {
+            weeklyStatistics["reps"] = newExercise.reps
+        }
+        if newExercise.weight != nil && Float(newExercise.weight!) > weeklyStatistics["weight"]! {
+            weeklyStatistics["weight"] = newExercise.weight
+        }
+        
+        maxWeight.text! = "\(weeklyStatistics["weight"]!) lbs"
+        maxReps.text! = "\(weeklyStatistics["reps"]!) reps"
+        
         self.exerciseLog.append(newExercise)
         exerciseTableView.reloadData()
     }
@@ -82,11 +110,9 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier == "NewAerobicExercise" {
             let vc = segue.destination as! AerobicExerciseViewController
             vc.delegate = self
-            vc.exerciseLog = self.exerciseLog
         } else {
             let vc = segue.destination as! StrengthExerciseViewController
             vc.delegate = self
-            vc.exerciseLog = self.exerciseLog
         }
     }
 
