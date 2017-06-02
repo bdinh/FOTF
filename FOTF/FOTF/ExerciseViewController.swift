@@ -10,6 +10,22 @@ import UIKit
 
 class ExerciseViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBAction func composeNewExercise(_ sender: Any) {
+        let alertController = UIAlertController(title: "Exercise Type", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Aerobic", style:.default, handler: { (_) in
+            self.performSegue(withIdentifier: "NewAerobicExercise", sender: self)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Strength", style:.default, handler: { (_) in
+            self.performSegue(withIdentifier: "NewStrengthExercise", sender: self)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style:.cancel))
+
+        self.present(alertController, animated: true)
+
+    }
     func numberOfSections(in tableView: UITableView) -> Int {
         // will have it based on dates
         return 1
