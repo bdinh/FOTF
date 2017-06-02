@@ -9,7 +9,7 @@
 import UIKit
 
 class AerobicExerciseViewController: UIViewController {
-    var exerciseItem = Exercise()
+    var exerciseLog = [Exercise]()
     
     @IBOutlet weak var exerciseTitle: UITextField!
     @IBOutlet weak var distance: UITextField!
@@ -20,9 +20,16 @@ class AerobicExerciseViewController: UIViewController {
     }
     
     @IBAction func finishCompose(_ sender: Any) {
+        let exerciseItem = Exercise()
         exerciseItem.description = exerciseTitle.text!
         exerciseItem.distance = distance.text!
         exerciseItem.duration = duration.text!
+        exerciseLog.append(exerciseItem)
+        
+        presentingViewController?.dismiss(animated: true, completion: {
+            let vc = self.presentingViewController as! ExerciseViewController
+            vc.exerciseLog = self.exerciseLog
+        })
     }
     
     override func viewDidLoad() {
@@ -45,6 +52,7 @@ class AerobicExerciseViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+     */
+    
 
 }
