@@ -11,8 +11,8 @@ import Foundation
 class Exercise {
     var type: String = ""
     var description: String = ""
-    var duration: String = ""
-    var reps: String = ""
-    var weight: String = ""
-    var distance: String = ""
+    var duration: Float?
+    var reps: Float?
+    var weight: Float?
+    var distance: Float?
 }

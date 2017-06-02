@@ -26,15 +26,44 @@ class StrengthExerciseViewController: UIViewController {
     }
     
     @IBAction func finishCompose(_ sender: Any) {
-        let exerciseItem = Exercise()
-        exerciseItem.type = self.type
-        exerciseItem.description = exerciseTitle.text!
-        exerciseItem.reps = reps.text!
-        exerciseItem.weight = reps.text!
-        //exerciseLog.append(exerciseItem)
-        
-        delegate?.finishNewStrength(exercise: exerciseItem)
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        if validateInput() {
+            let exerciseItem = Exercise()
+            exerciseItem.type = self.type
+            exerciseItem.description = exerciseTitle.text!
+            exerciseItem.reps = Float(reps.text!)
+            exerciseItem.weight = Float(reps.text!)
+            
+            delegate?.finishNewStrength(exercise: exerciseItem)
+            presentingViewController?.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func validateInput() -> Bool {
+        var valid = true
+        let errorMessage: String = "Please enter a number in the"
+        var errorFields: String = ""
+        if !isStringFloat(string: weight.text!) && (weight.text!).characters.count > 0 {
+            valid = false
+            errorFields += "weight field "
+        }
+        if !isStringFloat(string: reps.text!) {
+            if valid == false {
+                errorFields += "and the "
+            }
+            valid = false
+            errorFields += "reps field"
+        }
+        if !valid {
+            let alertController = UIAlertController(title: nil, message: "\(errorMessage) \n\(errorFields)", preferredStyle: UIAlertControllerStyle.actionSheet)
+            let OKAction = UIAlertAction(title: "OK", style: .default)
+            alertController.addAction(OKAction)
+            self.present(alertController, animated: true)
+        }
+        return valid
+    }
+    
+    func isStringFloat(string: String) -> Bool {
+        return Float(string) != nil
     }
     
     override func viewDidLoad() {

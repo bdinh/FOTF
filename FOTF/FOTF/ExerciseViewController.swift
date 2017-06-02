@@ -54,10 +54,10 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         let cell = exerciseTableView.dequeueReusableCell(withIdentifier: "exerciseCell")
         cell?.textLabel?.text = exercise.description
         if exercise.type == "Aerobic" {
-            cell?.detailTextLabel?.text = "\(exercise.duration) minutes"
+            cell?.detailTextLabel?.text = "\(exercise.duration!) minutes"
             cell?.imageView?.image = #imageLiteral(resourceName: "Running_25")
         } else {
-            cell?.detailTextLabel?.text = "\(exercise.reps) reps"
+            cell?.detailTextLabel?.text = "\(exercise.reps!) reps"
             cell?.imageView?.image = #imageLiteral(resourceName: "strength")
         }
         return cell!

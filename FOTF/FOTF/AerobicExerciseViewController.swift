@@ -26,18 +26,44 @@ class AerobicExerciseViewController: UIViewController {
     }
     
     @IBAction func finishCompose(_ sender: Any) {
-        let exerciseItem = Exercise()
-        exerciseItem.type = self.type
-        exerciseItem.description = exerciseTitle.text!
-        exerciseItem.distance = distance.text!
-        exerciseItem.duration = duration.text!
-        //exerciseLog.append(exerciseItem)
-        
-        delegate?.finishNewAerobic(exercise: exerciseItem)
-        presentingViewController?.dismiss(animated: true, completion: nil)
-        
+        if validateInput() {
+            let exerciseItem = Exercise()
+            exerciseItem.type = self.type
+            exerciseItem.description = exerciseTitle.text!
+            exerciseItem.distance = Float(distance.text!)
+            exerciseItem.duration = Float(duration.text!)
+            delegate?.finishNewAerobic(exercise: exerciseItem)
+            presentingViewController?.dismiss(animated: true, completion: nil)
+        }
     }
     
+    func validateInput() -> Bool {
+        var valid = true
+        let errorMessage: String = "Please enter a number in the"
+        var errorFields: String = ""
+        if !isStringFloat(string: distance.text!) && (distance.text!).characters.count > 0 {
+            valid = false
+            errorFields += "distance field "
+        }
+        if !isStringFloat(string: duration.text!) {
+            if valid == false {
+                errorFields += "and the "
+            }
+            valid = false
+            errorFields += "duration field"
+        }
+        if !valid {
+            let alertController = UIAlertController(title: nil, message: "\(errorMessage) \n\(errorFields)", preferredStyle: UIAlertControllerStyle.actionSheet)
+            let OKAction = UIAlertAction(title: "OK", style: .default)
+            alertController.addAction(OKAction)
+            self.present(alertController, animated: true)
+        }
+        return valid
+    }
+    
+    func isStringFloat(string: String) -> Bool {
+        return Float(string) != nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
