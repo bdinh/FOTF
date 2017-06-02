@@ -119,7 +119,7 @@ class LoginViewController: UIViewController {
         loginButton.layer.addSublayer(gradient)
         
         loginTitle.text = "INFO 449 Final Project \n Fitness On The Fly"
-        loginQuote.text = "Insert Cheesy Quote \n about being health here :)"
+        loginQuote.text = "It's not about having time \nIt's about making time"
         
     
 //        self.userName.layer.cornerRadius = 15
