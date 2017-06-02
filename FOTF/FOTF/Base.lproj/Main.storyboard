@@ -375,8 +375,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="exerciseTableView" destination="CAf-Wm-HUf" id="gcb-DF-M8L"/>
-                        <segue destination="e4d-kf-RY3" kind="presentation" identifier="NewAerobicExercise" id="XSB-s8-OgO"/>
-                        <segue destination="hri-PL-NTe" kind="presentation" identifier="NewStrengthExercise" id="95N-0p-R0P"/>
+                        <segue destination="e4d-kf-RY3" kind="presentation" identifier="NewAerobicExercise" id="WD6-qc-NPd"/>
+                        <segue destination="hri-PL-NTe" kind="presentation" identifier="NewStrengthExercise" id="gki-iC-PY3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bLU-ar-Tss" userLabel="First Responder" sceneMemberID="firstResponder"/>

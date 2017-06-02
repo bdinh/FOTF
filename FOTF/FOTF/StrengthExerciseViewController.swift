@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol StrengthDelegate {
+    func finishNewStrength(exercise: Exercise)
+}
+
 class StrengthExerciseViewController: UIViewController {
     var exerciseLog = [Exercise]()
+    var delegate: StrengthDelegate?
 
     @IBOutlet weak var exerciseTitle: UITextField!
     @IBOutlet weak var weight: UITextField!
@@ -24,7 +29,10 @@ class StrengthExerciseViewController: UIViewController {
         exerciseItem.description = exerciseTitle.text!
         exerciseItem.reps = reps.text!
         exerciseItem.weight = reps.text!
-        exerciseLog.append(exerciseItem)
+        //exerciseLog.append(exerciseItem)
+        
+        delegate?.finishNewStrength(exercise: exerciseItem)
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -39,16 +47,14 @@ class StrengthExerciseViewController: UIViewController {
     }
     
 
-    
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        let vc = segue.destination as! ExerciseViewController
-        vc.exerciseLog = self.exerciseLog
     }
-    
+    */
 
 }

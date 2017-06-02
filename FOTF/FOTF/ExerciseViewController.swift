@@ -8,9 +8,19 @@
 
 import UIKit
 
-class ExerciseViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ExerciseViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AerobicDelegate, StrengthDelegate {
     var exerciseLog = [Exercise]()
 
+    func finishNewAerobic(exercise newExercise: Exercise) {
+        self.exerciseLog.append(newExercise)
+        exerciseTableView.reloadData()
+    }
+    
+    func finishNewStrength(exercise newExercise: Exercise) {
+        print("got here")
+        self.exerciseLog.append(newExercise)
+        exerciseTableView.reloadData()
+    }
     
     @IBOutlet weak var exerciseTableView: UITableView!
     
@@ -63,9 +73,11 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         // Pass the selected object to the new view controller.
         if segue.identifier == "NewAerobicExercise" {
             let vc = segue.destination as! AerobicExerciseViewController
+            vc.delegate = self
             vc.exerciseLog = self.exerciseLog
         } else {
             let vc = segue.destination as! StrengthExerciseViewController
+            vc.delegate = self
             vc.exerciseLog = self.exerciseLog
         }
     }
