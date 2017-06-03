@@ -9,11 +9,12 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
 
 class AccountViewController: UIViewController {
 
     @IBOutlet weak var profilePicture: UIImageView!
-    
+    var ref: DatabaseReference?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,10 +24,41 @@ class AccountViewController: UIViewController {
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2
         profilePicture.clipsToBounds = true
 
-        // Do any additional setup after loading the view.
-        if let currentUser = Auth.auth().currentUser {
-            print(currentUser)
+
+        if var email = Auth.auth().currentUser?.email! {
+            print(email)
+            self.ref = Database.database().reference()
+            let users = self.ref?.child("Users")
+            email = email.replacingOccurrences(of: ".", with: ",")
+            email = email.replacingOccurrences(of: "$", with: ",")
+            email = email.replacingOccurrences(of: "[", with: ",")
+            email = email.replacingOccurrences(of: "]", with: ",")
+            email = email.replacingOccurrences(of: "#", with: ",")
+            email = email.replacingOccurrences(of: "/", with: ",")
+            //var person = users?.child(email)
+            var name: String = ""
+            var age: Int = 0
+            var sex: String =  ""
+            
+            //print("the contents are \(name) \(age) \(sex)")
+            
+            self.ref?.observe(.value, with: { snapshot in
+                let value = snapshot.value as! NSDictionary
+                if let users = value["Users"] as? NSDictionary {
+                    let profile = users[email] as! [String: Any]
+                    name = profile["name"]! as! String
+                    age = profile["age"]! as! Int
+                    sex = profile["sex"] as! String
+                    print("the contents are \(name) \(age) \(sex)")
+                    
+                }
+                
+            })
+            
+            
         } else {
+            
+            
             print("no current user")
         }
     }
