@@ -17,14 +17,11 @@ class AccountViewController: UIViewController {
     var ref: DatabaseReference?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         profilePicture.layer.borderWidth = 2
         profilePicture.layer.masksToBounds = false
         profilePicture.layer.borderColor = UIColor.white.cgColor
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2
         profilePicture.clipsToBounds = true
-
-        
         loadCurrentUserInfo()
     }
     
@@ -41,11 +38,10 @@ class AccountViewController: UIViewController {
             var name: String = ""
             var age: Int = 0
             var sex: String =  ""
-            
-            
             var weight: Int = 0 // for pounds
             var height: String = "" // convert from inches to string
-            
+    
+            // get values
             self.ref?.observe(.value, with: { snapshot in
                 let value = snapshot.value as! NSDictionary
                 if let users = value["Users"] as? NSDictionary {
@@ -53,10 +49,6 @@ class AccountViewController: UIViewController {
                     name = profile["name"]! as! String
                     age = profile["age"]! as! Int
                     sex = profile["sex"] as! String
-                    print("the contents are \(name) \(age) \(sex)")
-                    
-                    
-                    
                     if let pounds: Int = profile["weight"] as? Int {
                         weight = pounds
                     }
@@ -64,11 +56,8 @@ class AccountViewController: UIViewController {
                         let feet = totalInches / 12
                         let inches = totalInches % 12
                         height = "\(feet)' \(inches)\""
-                     }
-                    
-                    print("the height and weight are \(height) \(weight)")
-                    
-                    
+                    }
+                    print("name: \(name) age: \(age) sex: \(sex) weight: \(weight) height: \(height)")
                 }
                 
             })
@@ -77,10 +66,11 @@ class AccountViewController: UIViewController {
              self.name.text = name
              self.age.text = age
              self.sex.text = sex
-             
+             self.weight.text = weight
+             self.height.text = height
              
              */
-        } else {
+        } else { // do nothing, shouldnt reach here
             print("no current user")
         }
     }
@@ -92,7 +82,6 @@ class AccountViewController: UIViewController {
                 try Auth.auth().signOut()
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginView")
                 present(vc, animated: true, completion: nil)
-                
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
