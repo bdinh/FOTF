@@ -24,23 +24,27 @@ class AccountViewController: UIViewController {
         profilePicture.layer.cornerRadius = profilePicture.frame.height/2
         profilePicture.clipsToBounds = true
 
-
+        
+        loadCurrentUserInfo()
+    }
+    
+    func loadCurrentUserInfo() {
         if var email = Auth.auth().currentUser?.email! {
             print(email)
             self.ref = Database.database().reference()
-            let users = self.ref?.child("Users")
             email = email.replacingOccurrences(of: ".", with: ",")
             email = email.replacingOccurrences(of: "$", with: ",")
             email = email.replacingOccurrences(of: "[", with: ",")
             email = email.replacingOccurrences(of: "]", with: ",")
             email = email.replacingOccurrences(of: "#", with: ",")
             email = email.replacingOccurrences(of: "/", with: ",")
-            //var person = users?.child(email)
             var name: String = ""
             var age: Int = 0
             var sex: String =  ""
             
-            //print("the contents are \(name) \(age) \(sex)")
+            
+            var weight: Int = 0 // for pounds
+            var height: String = "" // convert from inches to string
             
             self.ref?.observe(.value, with: { snapshot in
                 let value = snapshot.value as! NSDictionary
@@ -51,14 +55,32 @@ class AccountViewController: UIViewController {
                     sex = profile["sex"] as! String
                     print("the contents are \(name) \(age) \(sex)")
                     
+                    
+                    
+                    if let pounds: Int = profile["weight"] as? Int {
+                        weight = pounds
+                    }
+                    if let totalInches: Int = profile["height"] as? Int {
+                        let feet = totalInches / 12
+                        let inches = totalInches % 12
+                        height = "\(feet)' \(inches)\""
+                     }
+                    
+                    print("the height and weight are \(height) \(weight)")
+                    
+                    
                 }
                 
             })
-            
-            
+            /* Set storyboard reference values to fetched values
+             
+             self.name.text = name
+             self.age.text = age
+             self.sex.text = sex
+             
+             
+             */
         } else {
-            
-            
             print("no current user")
         }
     }
