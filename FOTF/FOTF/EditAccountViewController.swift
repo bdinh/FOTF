@@ -7,9 +7,31 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseDatabase
 
 class EditAccountViewController: UIViewController {
 
+    @IBOutlet weak var name: UITextField!
+    
+    @IBOutlet weak var age: UITextField!
+    
+    @IBOutlet weak var sex: UITextField!
+    
+    @IBOutlet weak var weight: UITextField!
+    
+    @IBOutlet weak var height: UITextField!
+    
+    
+    @IBAction func savePressed(_ sender: Any) {
+        
+    }
+    
+    
+    var ref: DatabaseReference?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

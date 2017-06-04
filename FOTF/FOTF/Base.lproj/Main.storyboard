@@ -136,10 +136,10 @@
             </objects>
             <point key="canvasLocation" x="640.79999999999995" y="-991.75412293853083"/>
         </scene>
-        <!--View Controller-->
+        <!--Edit Account View Controller-->
         <scene sceneID="Ktk-rI-WGx">
             <objects>
-                <viewController id="5kO-vy-lwZ" sceneMemberID="viewController">
+                <viewController id="5kO-vy-lwZ" customClass="EditAccountViewController" customModule="FOTF" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Oeg-cU-AL9"/>
                         <viewControllerLayoutGuide type="bottom" id="h34-tn-Fhz"/>
@@ -187,10 +187,20 @@
                                 <rect key="frame" x="138" y="555" width="98" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Save Changes"/>
+                                <connections>
+                                    <action selector="savePressed:" destination="5kO-vy-lwZ" eventType="touchUpInside" id="Yr5-4x-HOR"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="age" destination="cJp-gd-hdK" id="uwR-qm-PpH"/>
+                        <outlet property="height" destination="F4a-Eb-6Bb" id="617-5a-FrZ"/>
+                        <outlet property="name" destination="hj6-PS-AY1" id="A8H-Dg-ASP"/>
+                        <outlet property="sex" destination="XhH-ga-Ky5" id="WvY-4m-joy"/>
+                        <outlet property="weight" destination="BoP-cn-1fd" id="vDy-k6-nod"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D5x-zr-uyU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
