@@ -24,8 +24,11 @@ class AccountViewController: UIViewController {
         profilePicture.clipsToBounds = true
 
         // Do any additional setup after loading the view.
-        let currentUser = Auth.auth().currentUser
-        print(currentUser)
+        if let currentUser = Auth.auth().currentUser {
+            print(currentUser)
+        } else {
+            print("no current user")
+        }
     }
     
     // source: http://www.appcoda.com/firebase-login-signup/

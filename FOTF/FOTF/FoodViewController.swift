@@ -43,6 +43,25 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // MOCK DATA
+        let foodObject = Food()
+        foodObject.title = self.entryData[(tableView.indexPathForSelectedRow!.row)]
+        foodObject.calories = "120"
+        foodObject.fat = "4"
+        foodObject.sodium = "70"
+        foodObject.cholesterol = "5"
+        foodObject.sugar = "13"
+        foodObject.protein = "2"
+        foodObject.brand = "Breyers"
+        foodObject.servingSize = "0.5"
+        foodObject.servingUnit = "cup"
+        
+        let detailController = self.storyboard?.instantiateViewController(withIdentifier: "FoodDetailVC") as! FoodDetailViewController
+        detailController.foodObject = foodObject
+        self.present(detailController, animated: true, completion: nil)
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
