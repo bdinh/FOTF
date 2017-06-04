@@ -26,6 +26,36 @@ class EditAccountViewController: UIViewController {
     
     @IBAction func savePressed(_ sender: Any) {
         
+        
+        if name.text == "" || age.text == "" || sex.text == "" || weight.text == "" || height.text == "" {
+            let alertController = UIAlertController(title: "Error", message: "Please fill in all values", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            present(alertController, animated: true, completion: nil)
+        } else {
+            let newName = name.text
+            let newAge = Int(age.text!)!
+            let newSex = sex.text
+            let newWeight = Int(weight.text!)!
+            let newHeight = Int(height.text!)!
+            if var email = Auth.auth().currentUser?.email! {
+                self.ref = Database.database().reference()
+                let users = self.ref?.child("Users") // gets user table
+                email = email.replacingOccurrences(of: ".", with: ",")
+                email = email.replacingOccurrences(of: "$", with: ",")
+                email = email.replacingOccurrences(of: "[", with: ",")
+                email = email.replacingOccurrences(of: "]", with: ",")
+                email = email.replacingOccurrences(of: "#", with: ",")
+                email = email.replacingOccurrences(of: "/", with: ",")
+                let updated = User(name: newName!, email: email, age: newAge, sex: newSex!, weight: newWeight, height: newHeight)
+                let newUser = users?.ref.child(email) // create child for email
+                newUser?.setValue(updated.toAnyObject()) // populate information for child
+                //self.performSegue(withIdentifier: "saveProfileChanges", sender: sender) // go to profile
+                
+            }
+        }
+        
+        
     }
     
     
