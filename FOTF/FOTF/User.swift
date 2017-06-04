@@ -15,12 +15,16 @@ public struct User {
     public var email: String
     public var age: Int
     public var sex: String
+    public var weight: Int = 0
+    public var height: Int = 0
     
-    init(name: String, email: String, age: Int, sex: String) {
+    init(name: String, email: String, age: Int, sex: String, weight: Int?, height: Int?) {
         self.name = name
         self.email = email
         self.age = age
         self.sex = sex
+        self.weight = weight!
+        self.height = height!
     }
     
     public func getName() -> String {
@@ -39,12 +43,23 @@ public struct User {
         return self.sex
     }
     
+    public func getWeight() -> Int {
+        return self.weight
+    }
+
+    public func getHeight() -> Int {
+        return self.height
+    }
+
+    
     public func toAnyObject() -> Any {
         return [
             "name": self.name,
             "email": self.email,
             "age": self.age,
-            "sex": self.sex
+            "sex": self.sex,
+            "weight": self.weight,
+            "height": self.height
         ]
     }
 }

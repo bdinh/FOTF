@@ -111,7 +111,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     email = email.replacingOccurrences(of: "#", with: ",")
                     email = email.replacingOccurrences(of: "/", with: ",")
                     
-                    let user = User(name: name, email: email, age: age, sex: sex) // create json with name age sex and email filled in
+                    let user = User(name: name, email: email, age: age, sex: sex, weight: 0, height: 0) // create json with name age sex and email filled in
                     let users = self.ref?.child("Users") // gets user table
                     let newUser = users?.ref.child(email) // create child for email
                     newUser?.setValue(user.toAnyObject()) // populate information for child
