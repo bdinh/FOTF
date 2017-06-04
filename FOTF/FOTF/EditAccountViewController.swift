@@ -50,7 +50,7 @@ class EditAccountViewController: UIViewController {
                 let updated = User(name: newName!, email: email, age: newAge, sex: newSex!, weight: newWeight, height: newHeight)
                 let newUser = users?.ref.child(email) // create child for email
                 newUser?.setValue(updated.toAnyObject()) // populate information for child
-                //self.performSegue(withIdentifier: "saveProfileChanges", sender: sender) // go to profile
+                self.performSegue(withIdentifier: "editAccountSegue", sender: sender) // go to profile
                 
             }
         }

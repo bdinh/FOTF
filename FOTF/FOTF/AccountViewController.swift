@@ -58,18 +58,14 @@ class AccountViewController: UIViewController {
                         height = "\(feet)' \(inches)\""
                     }
                     print("name: \(name) age: \(age) sex: \(sex) weight: \(weight) height: \(height)")
+                    self.name.text = "Name: \(name)"
+                    self.age.text = "Age: \(age)"
+                    self.Sex.text = "Sex: \(sex)"
+                    self.weight.text = "Weight: \(weight)"
+                    self.height.text = "Height: \(height)"
                 }
                 
             })
-            /* Set storyboard reference values to fetched values
-             
-             self.name.text = name
-             self.age.text = age
-             self.sex.text = sex
-             self.weight.text = weight
-             self.height.text = height
-             
-             */
         } else { // do nothing, shouldnt reach here
             print("no current user")
         }
@@ -88,6 +84,29 @@ class AccountViewController: UIViewController {
         }
     }
 
+    
+    
+    
+    @IBOutlet weak var name: UILabel!
+    
+    
+    @IBOutlet weak var age: UILabel!
+    
+    
+    @IBOutlet weak var Sex: UILabel!
+    
+    
+    @IBOutlet weak var height: UILabel!
+    
+    @IBOutlet weak var weight: UILabel!
+    
+    
+    
+    
+    
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
