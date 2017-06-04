@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 import FirebaseDatabase
 import Alamofire
 
@@ -32,8 +34,18 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
 //        if newEntry.text != "" {
 //            ref?.child("users").child(currentUser).child("foodEntry").childByAutoId().setValue(newEntry.text)
 //        }
-        ref?.child("foodEntry").childByAutoId().setValue(newEntry.text)
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        if var email = Auth.auth().currentUser?.email! {
+            print(email)
+            email = email.replacingOccurrences(of: ".", with: ",")
+            email = email.replacingOccurrences(of: "$", with: ",")
+            email = email.replacingOccurrences(of: "[", with: ",")
+            email = email.replacingOccurrences(of: "]", with: ",")
+            email = email.replacingOccurrences(of: "#", with: ",")
+            email = email.replacingOccurrences(of: "/", with: ",")
+            ref?.child("foodEntry").child(email).childByAutoId().setValue(newEntry.text)
+            //ref?.child("foodEntry").childByAutoId().setValue(newEntry.text)
+            presentingViewController?.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func cancelCompose(_ sender: Any) {

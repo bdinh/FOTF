@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import Firebase
+import FirebaseAuth
 import FirebaseDatabase
 
 class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
@@ -70,15 +72,25 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         ref = Database.database().reference()
-        databaseHandle = ref?.child("foodEntry").observe(.childAdded, with: { (snapshot) in
-            let entry = snapshot.value as? String
-            
-            if let actualEntry = entry {
-                self.entryData.append(actualEntry)
-                self.foodTableView.reloadData()
-            }
+        if var email = Auth.auth().currentUser?.email! {
+            print(email)
+            email = email.replacingOccurrences(of: ".", with: ",")
+            email = email.replacingOccurrences(of: "$", with: ",")
+            email = email.replacingOccurrences(of: "[", with: ",")
+            email = email.replacingOccurrences(of: "]", with: ",")
+            email = email.replacingOccurrences(of: "#", with: ",")
+            email = email.replacingOccurrences(of: "/", with: ",")
+        
+            databaseHandle = ref?.child("foodEntry").child(email).observe(.childAdded, with: { (snapshot) in
+                let entry = snapshot.value as? String
+                
+                if let actualEntry = entry {
+                    self.entryData.append(actualEntry)
+                    self.foodTableView.reloadData()
+                }
 
         })
+        }
         
 //        
 //        retrieveDataFromDatabase(ref!)
