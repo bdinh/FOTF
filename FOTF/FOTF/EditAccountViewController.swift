@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
-class EditAccountViewController: UIViewController {
+class EditAccountViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var name: UITextField!
     
@@ -64,7 +64,12 @@ class EditAccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.age.delegate = self
+        self.weight.delegate = self
+        self.height.delegate = self
+        self.age.keyboardType = .numberPad
+        self.weight.keyboardType = .numberPad
+        self.height.keyboardType = .numberPad
         // Do any additional setup after loading the view.
     }
 
@@ -73,7 +78,12 @@ class EditAccountViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    // makes age field keyboard valid characters only numeric
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let invalidCharacters = CharacterSet(charactersIn: "0123456789").inverted
+        return string.rangeOfCharacter(from: invalidCharacters, options: [], range: string.startIndex ..< string.endIndex) == nil
+    }
+    
     /*
     // MARK: - Navigation
 
