@@ -182,7 +182,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         gradient.cornerRadius = 15
         loginButton.layer.addSublayer(gradient)
         loginTitle.text = "INFO 449 Final Project \n Fitness On The Fly"
-        loginQuote.text = "Insert Cheesy Quote \n about being health here :)"
+        loginQuote.text = "It's not about having time \nIt's about making time"
+        
+    
 //        self.userName.layer.cornerRadius = 15
 //        self.userName.layer.borderWidth = 1
 //        self.userName.layer.borderColor = UIColor(red: 101, green: 110, blue: 121, alpha: 0.75).cgColor
