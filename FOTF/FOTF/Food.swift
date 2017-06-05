@@ -19,6 +19,7 @@ class Food {
     var servingSize: String = ""
     var servingUnit: String = ""
     var brand: String = ""
+    var qty: String = "0"
     
 //    init(title: String, calories: String, fat: String, sodium: String, cholesterol: String,
 //         sugar: String, protein: String, servingSize: String, servingUnit: String, brand: String) {
@@ -45,7 +46,8 @@ class Food {
             "protein": self.protein,
             "servingSize": self.servingSize,
             "servingUnit": self.servingUnit,
-            "brand": self.brand
+            "brand": self.brand,
+            "qty": self.qty
         ]
     }
 }

@@ -24,6 +24,17 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     
     @IBOutlet weak var newEntry: UITextField!
     
+    @IBOutlet weak var currentQuantity: UILabel!
+    
+    
+    
+    
+    
+    @IBAction func stepperQuantity(_ sender: UIStepper) {
+        currentQuantity.text = String(Int(sender.value))
+    }
+    
+    
     var ref: DatabaseReference?
     
     @IBAction func searchFood(_ sender: Any) {
@@ -34,6 +45,7 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
         
         var currentUser = Auth.auth().currentUser?.email as! String
         currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+        selectedItem.qty = self.currentQuantity.text!
         self.ref?.child("foodEntry").child(currentUser).child(currentDate).childByAutoId().setValue(selectedItem.toAnyObject())
 
         presentingViewController?.dismiss(animated: true, completion: nil)
