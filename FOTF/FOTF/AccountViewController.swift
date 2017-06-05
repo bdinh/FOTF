@@ -27,7 +27,7 @@ class AccountViewController: UIViewController {
     
     func loadCurrentUserInfo() {
         if var email = Auth.auth().currentUser?.email! {
-            print(email)
+//            print(email)
             self.ref = Database.database().reference()
             email = email.replacingOccurrences(of: ".", with: ",")
             email = email.replacingOccurrences(of: "$", with: ",")
@@ -57,7 +57,7 @@ class AccountViewController: UIViewController {
                         let inches = totalInches % 12
                         height = "\(feet)' \(inches)\""
                     }
-                    print("name: \(name) age: \(age) sex: \(sex) weight: \(weight) height: \(height)")
+//                    print("name: \(name) age: \(age) sex: \(sex) weight: \(weight) height: \(height)")
                     self.name.text = "Name: \(name)"
                     self.age.text = "Age: \(age)"
                     self.Sex.text = "Sex: \(sex)"

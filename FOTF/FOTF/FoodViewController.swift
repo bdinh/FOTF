@@ -9,40 +9,20 @@
 import UIKit
 import Alamofire
 import FirebaseDatabase
+import FirebaseAuth
 
 class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
     
-    var entryData = [String]()
+    var entryData: [String] = []
     var ref: DatabaseReference?
     var databaseHandle: DatabaseHandle?
+    var userFoodJournal: [DateEntry] = []
+    var testJournal: [DateEntry] = []
     
     @IBOutlet weak var foodTableView: UITableView!
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return entryData.count
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = foodTableView.dequeueReusableCell(withIdentifier: "foodEntryCell")
-        cell?.textLabel?.text = entryData[indexPath.row]
-        return cell!
-        
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete {
-            // remove from firebase
-//            entryData.remove(at: indexPath.row)
-//            
-//            let entry = self.entryData[indexPath.row]
-//                
-//            
-//            Database.database().reference().child("foodEntry").child(<#T##pathString: String##String#>)
-//            foodTableView.reloadData()
-        }
-    }
-    
-    
+    // Throws an error need fixing
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // MOCK DATA
         let foodObject = Food()
@@ -67,25 +47,111 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         foodTableView.delegate = self
         foodTableView.dataSource = self
+        let addingNewDate = DateEntry()
+        addingNewDate.date = "June 5, 2017"
+        let addingFood = Food()
+        addingFood.title = "test"
+        let addingFood2 = Food()
+        addingFood2.title = "test2"
+        addingNewDate.foodList.append(addingFood)
+        addingNewDate.foodList.append(addingFood2)
+        self.testJournal.append(addingNewDate)
         
+        foodTableView.allowsMultipleSelectionDuringEditing = true
+        
+        var currentUser = Auth.auth().currentUser?.email as! String
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         
         ref = Database.database().reference()
-        databaseHandle = ref?.child("foodEntry").observe(.childAdded, with: { (snapshot) in
-            let entry = snapshot.value as? String
-            
-            if let actualEntry = entry {
-                self.entryData.append(actualEntry)
-                self.foodTableView.reloadData()
+        ref?.child("foodEntry").child(currentUser).observe(.value, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                self.userFoodJournal = []
+                for dateEntry in dictionary {
+                    let newDate = DateEntry()
+                    newDate.date = dateEntry.key
+                    if let foodEntry = dateEntry.value as? [String: AnyObject] {
+                        for foodItem in foodEntry {
+                            let newFoodEntry = Food()
+                            if let foodDetail = foodItem.value as? [String: String] {
+                                newFoodEntry.title = foodDetail["title"]!
+                                newFoodEntry.calories = foodDetail["calories"]!
+                                newFoodEntry.fat = foodDetail["fat"]!
+                                newFoodEntry.sugar = foodDetail["sugar"]!
+                                newFoodEntry.brand = foodDetail["brand"]!
+                                newFoodEntry.protein = foodDetail["protein"]!
+                                newFoodEntry.servingUnit = foodDetail["servingUnit"]!
+                                newFoodEntry.servingSize = foodDetail["servingSize"]!
+                                newFoodEntry.cholesterol = foodDetail["cholesterol"]!
+                                newFoodEntry.sodium = foodDetail["sodium"]!
+                                newDate.foodList.append(newFoodEntry)
+                            }
+                            
+                        }
+                    }
+                    self.userFoodJournal.append(newDate)
+                }
             }
+            self.foodTableView.reloadData()
 
         })
+
         
-//        
-//        retrieveDataFromDatabase(ref!)
-        
-        foodTableView.reloadData()
-        // Do any additional setup after loading the view, typically from a nib.
+
     }
+
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return userFoodJournal.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return userFoodJournal[section].date
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return userFoodJournal[section].foodList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = foodTableView.dequeueReusableCell(withIdentifier: "foodEntryCell")
+        cell?.textLabel?.text = userFoodJournal[indexPath.section].foodList[indexPath.row].title
+        return cell!
+        
+        
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            var currentUser = Auth.auth().currentUser?.email as! String
+            currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+            let foodItem = userFoodJournal[indexPath.section].foodList[indexPath.row].title
+            let deletedate = userFoodJournal[indexPath.section].date
+            
+            let query = ref?.child("foodEntry").child(currentUser).child(deletedate).queryOrdered(byChild: "title").queryEqual(toValue: foodItem)
+                
+                
+//                query.observe(.value, with: { (snapshot) in
+//                    print(snapshot.value)
+//                })
+            
+            query?.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let deleteSnap = snapshot.value as? [String: AnyObject] {
+                    var deleteID = ""
+                    for (key, value) in deleteSnap {
+                        deleteID = key
+                        print(deleteID)
+                    }
+                    self.ref?.child("foodEntry").child(currentUser).child(deletedate).child(deleteID).removeValue()
+                }
+            })
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -93,11 +159,6 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
 
-//    func retrieveDataFromDatabase(reference: DatabaseReference) {
-//        databaseHandle = reference.child("foodEntry").observe(.childAdded) { (snapshot) in
-//            <#code#>
-//        }
-//        
-//    }
+
 }
 

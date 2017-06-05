@@ -25,6 +25,7 @@
 		6D90AB9C1EE0E7C10032EE6A /* AerobicExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90AB9B1EE0E7C10032EE6A /* AerobicExerciseViewController.swift */; };
 		6D90AB9E1EE10BD20032EE6A /* StrengthExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90AB9D1EE10BD20032EE6A /* StrengthExerciseViewController.swift */; };
 		6DA6E6251ED7EE6000DE9E44 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA6E6241ED7EE6000DE9E44 /* Food.swift */; };
+		E3CB2B491EE3DBE900D03436 /* DateEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CB2B481EE3DBE900D03436 /* DateEntry.swift */; };
 		E3F60E751EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F60E741EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift */; };
 		E3FF60391ECEA8F0002CD4F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FF60381ECEA8F0002CD4F4 /* LoginViewController.swift */; };
 		E3FF603C1ECEA979002CD4F4 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FF603B1ECEA979002CD4F4 /* LoginTextField.swift */; };
@@ -68,6 +69,7 @@
 		6DA6E6241ED7EE6000DE9E44 /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		824F4D912E6DF6E757212FFB /* Pods-FOTFTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTFTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FOTFTests/Pods-FOTFTests.release.xcconfig"; sourceTree = "<group>"; };
 		C09E9C8D81947AECB4B4FE96 /* Pods_FOTF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FOTF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3CB2B481EE3DBE900D03436 /* DateEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateEntry.swift; sourceTree = "<group>"; };
 		E3F60E741EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeNewFoodEntryViewController.swift; sourceTree = "<group>"; };
 		E3FF60381ECEA8F0002CD4F4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3FF603B1ECEA979002CD4F4 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				6D90AB9D1EE10BD20032EE6A /* StrengthExerciseViewController.swift */,
 				463A2A1A1EE0FBAB0076CCB9 /* FoodDetailViewController.swift */,
 				69F17B481EE0A4B500AF69BD /* User.swift */,
+				E3CB2B481EE3DBE900D03436 /* DateEntry.swift */,
 				695C9EC41EE3A20D003DB272 /* EditAccountViewController.swift */,
 			);
 			name = ViewControllers;
@@ -242,7 +245,7 @@
 				TargetAttributes = {
 					6D34A2321ECE6E8700F7CCA1 = {
 						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					6D34A2481ECE6E8800F7CCA1 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -399,6 +402,7 @@
 				6D90AB9A1EE0E6CD0032EE6A /* Exercise.swift in Sources */,
 				E3FF603C1ECEA979002CD4F4 /* LoginTextField.swift in Sources */,
 				6DA6E6251ED7EE6000DE9E44 /* Food.swift in Sources */,
+				E3CB2B491EE3DBE900D03436 /* DateEntry.swift in Sources */,
 				6D90AB9E1EE10BD20032EE6A /* StrengthExerciseViewController.swift in Sources */,
 				E3FF60391ECEA8F0002CD4F4 /* LoginViewController.swift in Sources */,
 				695C9EC51EE3A20D003DB272 /* EditAccountViewController.swift in Sources */,
@@ -545,11 +549,13 @@
 			baseConfigurationReference = 30A06DD6734BB825B7C16E92 /* Pods-FOTF.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = FOTF/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.info449.FOTF;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -559,11 +565,13 @@
 			baseConfigurationReference = 5B40344CDAE4BE6D7F73E0DD /* Pods-FOTF.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = FOTF/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.info449.FOTF;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

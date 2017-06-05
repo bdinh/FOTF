@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import Alamofire
+import FirebaseAuth
 
 class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -16,7 +17,8 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     var searchResults: [Food] = []
     let apiID: String = "d09f36f1"
     let apiKey: String = "fc4200e582f9de3d0b19ef0716196032"
-    var currentUser = "bdinh@uw.edu"
+    var currentDate: String = ""
+    var selectedItem = Food()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -29,11 +31,13 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     }
     
     @IBAction func finishCompose(_ sender: Any) {
-//        if newEntry.text != "" {
-//            ref?.child("users").child(currentUser).child("foodEntry").childByAutoId().setValue(newEntry.text)
-//        }
-        ref?.child("foodEntry").childByAutoId().setValue(newEntry.text)
+        
+        var currentUser = Auth.auth().currentUser?.email as! String
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+        self.ref?.child("foodEntry").child(currentUser).child(currentDate).childByAutoId().setValue(selectedItem.toAnyObject())
+
         presentingViewController?.dismiss(animated: true, completion: nil)
+        
     }
     
     @IBAction func cancelCompose(_ sender: Any) {
@@ -96,9 +100,8 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = self.searchResults[indexPath.row]
-        
+        self.selectedItem = item
         let alertController = UIAlertController(title: item.title, message: "\(item.servingSize) \(item.servingUnit) \ncalories: \(item.calories) kcal \nfat: \(item.fat) grams \nsodium: \(item.sodium) miligrams \ncholestrol: \(item.cholesterol) miligrams \nsugar: \(item.sugar) grams \nprotein: \(item.protein) grams", preferredStyle: UIAlertControllerStyle.actionSheet)
-        
         let OKAction = UIAlertAction(title: "OK", style: .default)
         alertController.addAction(OKAction)
         self.present(alertController, animated: true)
@@ -122,6 +125,13 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
         tableView.delegate = self
         tableView.dataSource = self
         ref = Database.database().reference()
+        
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        self.currentDate = formatter.string(from: currentDate)
+        
 
         // Do any additional setup after loading the view.
     }
@@ -132,15 +142,5 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
 
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
