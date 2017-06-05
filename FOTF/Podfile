@@ -10,6 +10,7 @@ target 'FOTF' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database’
   pod 'Alamofire', '~> 4.4'
+  pod 'SDWebImage', '~>3.8'
 
   target 'FOTFTests' do
     inherit! :search_paths

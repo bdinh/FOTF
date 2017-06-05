@@ -111,7 +111,6 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             self.foodTableView.reloadData()
             self.updateStatistics()
-
         })
         
         

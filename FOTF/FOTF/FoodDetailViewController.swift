@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SDWebImage
 
 class FoodDetailViewController: UIViewController {
     
@@ -20,11 +22,44 @@ class FoodDetailViewController: UIViewController {
     @IBOutlet weak var sugarField: UILabel!
     @IBOutlet weak var proteinField: UILabel!
     
+    @IBOutlet weak var foodImage: UIImageView!
+    
+    
     var foodObject: Food? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        let baseurl = "https://www.googleapis.com/customsearch/v1?"
+        let apiKey = "key=AIzaSyChekpdvPC4houyNdtzyfGGkuTdZwf0DJE"
+        let consoleID = "&cx=016670613649737080400:ky0c7sahduk"
+        let searchTerm = "&q=" + String((foodObject?.title)!)! + "+food"
+        let extraparam = "&searchType=image&filetype=jpg&num=1"
+        var link = ""
+        Alamofire.request(baseurl+apiKey+consoleID+searchTerm+extraparam).validate().responseJSON { response in
+            switch response.result {
+            case .success:
+                print("Validation Successful")
+                if let JSON = response.result.value {
+                    if let dictionary = JSON as? NSDictionary {
+                        if let image = dictionary["items"] as? NSArray {
+                            if let imageDict = image[0] as? NSDictionary {
+                                link = imageDict["link"]! as! String
+                                self.foodImage.sd_setImage(with: URL(string: link))
+                            }
+                        }
+                    }
+                }
+            case .failure(let error):
+                print(error)
+
+                
+            }
+        }
+        
+//        let imageURL = URL(string: link)
+//        self.foodImage.sd_setImage(with: URL(string: "https://images5.alphacoders.com/393/393394.jpg"))
         self.populateWithData()
     }
 

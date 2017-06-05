@@ -1013,6 +1013,7 @@
                         <outlet property="calorieField" destination="doD-ka-tgL" id="HWJ-r9-IWs"/>
                         <outlet property="cholesterolField" destination="lKS-5a-DYM" id="tbn-3E-G6J"/>
                         <outlet property="fatField" destination="nLo-lf-EdB" id="NgN-YP-ry1"/>
+                        <outlet property="foodImage" destination="hA3-Yj-vch" id="uc4-zz-Dqi"/>
                         <outlet property="proteinField" destination="zrJ-qg-2dT" id="hAb-RX-FPN"/>
                         <outlet property="servingSize" destination="2Hv-4E-HKp" id="ADC-rz-1hI"/>
                         <outlet property="sodiumField" destination="xdJ-0x-bV3" id="yYu-TG-234"/>
