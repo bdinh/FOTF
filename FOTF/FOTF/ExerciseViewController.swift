@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class ExerciseViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, AerobicDelegate, StrengthDelegate {
+    
+    var userExerciseJournal: [DateEntryExercise] = []
+    var ref: DatabaseReference?
+
     var exerciseLog = [Exercise]()
     var weeklyStatistics: [String: Float] = [
         "distance": 0,
@@ -23,31 +29,31 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var maxReps: UILabel!
 
     func finishNewAerobic(exercise newExercise: Exercise) {
-        if newExercise.distance != nil {
-            weeklyStatistics["distance"]! += newExercise.distance!
-        }
-        weeklyStatistics["minutes"]! += newExercise.duration!
-        
-        totalMinutes.text! = "\(weeklyStatistics["minutes"]!) minutes"
-        totalDistance.text! = "\(weeklyStatistics["distance"]!) miles"
-        
-        self.exerciseLog.append(newExercise)
-        exerciseTableView.reloadData()
+//        if newExercise.distance != nil {
+//            weeklyStatistics["distance"]! += newExercise.distance!
+//        }
+//        weeklyStatistics["minutes"]! += newExercise.duration!
+//        
+//        totalMinutes.text! = "\(weeklyStatistics["minutes"]!) minutes"
+//        totalDistance.text! = "\(weeklyStatistics["distance"]!) miles"
+//        
+//        self.exerciseLog.append(newExercise)
+//        exerciseTableView.reloadData()
     }
     
     func finishNewStrength(exercise newExercise: Exercise) {
-        if Float(newExercise.reps!) > weeklyStatistics["reps"]! {
-            weeklyStatistics["reps"] = newExercise.reps
-        }
-        if newExercise.weight != nil && Float(newExercise.weight!) > weeklyStatistics["weight"]! {
-            weeklyStatistics["weight"] = newExercise.weight
-        }
-        
-        maxWeight.text! = "\(weeklyStatistics["weight"]!) lbs"
-        maxReps.text! = "\(weeklyStatistics["reps"]!) reps"
-        
-        self.exerciseLog.append(newExercise)
-        exerciseTableView.reloadData()
+//        if Float(newExercise.reps!) > weeklyStatistics["reps"]! {
+//            weeklyStatistics["reps"] = newExercise.reps
+//        }
+//        if newExercise.weight != nil && Float(newExercise.weight!) > weeklyStatistics["weight"]! {
+//            weeklyStatistics["weight"] = newExercise.weight
+//        }
+//        
+//        maxWeight.text! = "\(weeklyStatistics["weight"]!) lbs"
+//        maxReps.text! = "\(weeklyStatistics["reps"]!) reps"
+//        
+//        self.exerciseLog.append(newExercise)
+//        exerciseTableView.reloadData()
     }
     
     @IBOutlet weak var exerciseTableView: UITableView!
@@ -70,32 +76,74 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         // will have it based on dates
-        return 1
+        return userExerciseJournal.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return exerciseLog.count
+        return userExerciseJournal[section].exerciseList.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return userExerciseJournal[section].date
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let exercise = exerciseLog[indexPath.row]
-        let cell = exerciseTableView.dequeueReusableCell(withIdentifier: "exerciseCell")
-        cell?.textLabel?.text = exercise.description
+        
+        let exercise = userExerciseJournal[indexPath.section].exerciseList[indexPath.row]
+        let cell = exerciseTableView.dequeueReusableCell(withIdentifier: "exerciseCell") as! ExerciseTableViewCell
+        
+        cell.exerciseName.text = exercise.description
         if exercise.type == "Aerobic" {
-            cell?.detailTextLabel?.text = "\(exercise.duration!) minutes"
-            cell?.imageView?.image = #imageLiteral(resourceName: "Running_25")
+            cell.exerciseAmount.text = exercise.duration + " minutes"
+            cell.exerciseImage.image = #imageLiteral(resourceName: "Running_25")
         } else {
-            cell?.detailTextLabel?.text = "\(exercise.reps!) reps"
-            cell?.imageView?.image = #imageLiteral(resourceName: "strength")
+            cell.exerciseAmount.text = exercise.reps + " reps"
+            cell.exerciseImage.image = #imageLiteral(resourceName: "strength")
         }
-        return cell!
+        return cell
         
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         exerciseTableView.delegate = self
-        exerciseTableView.delegate = self 
+        exerciseTableView.dataSource = self
+        
+        exerciseTableView.allowsMultipleSelectionDuringEditing = true
+
+        var currentUser = Auth.auth().currentUser?.email as! String
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+        
+        ref = Database.database().reference()
+        ref?.child("exerciseEntry").child(currentUser).observe(.value, with: { (snapshot) in
+            self.userExerciseJournal = []
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                for dateEntry in dictionary {
+                    let newDate = DateEntryExercise()
+                    newDate.date = dateEntry.key
+                    if let exerciseEntry = dateEntry.value as? [String: AnyObject] {
+                        for exerciseItem in exerciseEntry {
+                            let newExerciseEntry = Exercise()
+                            if let exerciseDetail = exerciseItem.value as? [String: String] {
+                                newExerciseEntry.type = exerciseDetail["type"]!
+                                newExerciseEntry.description = exerciseDetail["description"]!
+                                newExerciseEntry.distance = exerciseDetail["distance"]!
+                                newExerciseEntry.duration = exerciseDetail["duration"]!
+                                newExerciseEntry.reps = exerciseDetail["reps"]!
+                                newExerciseEntry.weight = exerciseDetail["weight"]!
+                                newDate.exerciseList.append(newExerciseEntry)
+                            }
+                            
+                        }
+                    }
+                    self.userExerciseJournal.append(newDate)
+                }
+            }
+            self.exerciseTableView.reloadData()
+//            self.updateStatistics()
+        })
+
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 

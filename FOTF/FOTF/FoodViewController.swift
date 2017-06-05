@@ -16,7 +16,7 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var entryData: [String] = []
     var ref: DatabaseReference?
     var databaseHandle: DatabaseHandle?
-    var userFoodJournal: [DateEntry] = []
+    var userFoodJournal: [DateEntryFood] = []
 //    var testJournal: [DateEntry] = []
     var detailSelect = Food()
     
@@ -84,7 +84,7 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.userFoodJournal = []
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 for dateEntry in dictionary {
-                    let newDate = DateEntry()
+                    let newDate = DateEntryFood()
                     newDate.date = dateEntry.key
                     if let foodEntry = dateEntry.value as? [String: AnyObject] {
                         for foodItem in foodEntry {

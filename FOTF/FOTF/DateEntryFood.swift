@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DateEntry {
+class DateEntryFood {
     var date: String = ""
     var foodList: [Food] = []
     

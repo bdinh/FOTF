@@ -19,6 +19,8 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     let apiKey: String = "fc4200e582f9de3d0b19ef0716196032"
     var currentDate: String = ""
     var selectedItem = Food()
+    var ref: DatabaseReference?
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -34,8 +36,6 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
         currentQuantity.text = String(Int(sender.value))
     }
     
-    
-    var ref: DatabaseReference?
     
     @IBAction func searchFood(_ sender: Any) {
         self.attemptRequest(query: newEntry.text!)
@@ -53,9 +53,7 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     }
     
     @IBAction func cancelCompose(_ sender: Any) {
-        
         presentingViewController?.dismiss(animated: true, completion: nil)
-
     }
     
     func attemptRequest(query: String) {

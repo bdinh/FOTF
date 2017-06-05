@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 protocol AerobicDelegate {
     func finishNewAerobic(exercise: Exercise)
@@ -15,6 +17,9 @@ protocol AerobicDelegate {
 class AerobicExerciseViewController: UIViewController {
     var delegate: AerobicDelegate?
     let type:String = "Aerobic"
+    var currentDate: String = ""
+    var ref: DatabaseReference?
+
     
     @IBOutlet weak var exerciseTitle: UITextField!
     @IBOutlet weak var distance: UITextField!
@@ -25,12 +30,17 @@ class AerobicExerciseViewController: UIViewController {
     }
     
     @IBAction func finishCompose(_ sender: Any) {
+        var currentUser = Auth.auth().currentUser?.email as! String
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         if validateInput() {
             let exerciseItem = Exercise()
             exerciseItem.type = self.type
             exerciseItem.description = exerciseTitle.text!
-            exerciseItem.distance = Float(distance.text!)
-            exerciseItem.duration = Float(duration.text!)
+            exerciseItem.distance = distance.text!
+            exerciseItem.duration = duration.text!
+            
+            self.ref?.child("exerciseEntry").child(currentUser).child(currentDate).childByAutoId().setValue(exerciseItem.toAnyObject())
+            
             delegate?.finishNewAerobic(exercise: exerciseItem)
             presentingViewController?.dismiss(animated: true, completion: nil)
         }
@@ -66,7 +76,13 @@ class AerobicExerciseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        ref = Database.database().reference()
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        self.currentDate = formatter.string(from: currentDate)
+        
         // Do any additional setup after loading the view.
     }
 

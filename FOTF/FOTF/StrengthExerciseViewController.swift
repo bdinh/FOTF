@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
 
 protocol StrengthDelegate {
     func finishNewStrength(exercise: Exercise)
@@ -15,6 +17,8 @@ protocol StrengthDelegate {
 class StrengthExerciseViewController: UIViewController {
     var delegate: StrengthDelegate?
     let type: String = "Strength"
+    var currentDate: String = ""
+    var ref: DatabaseReference?
 
     @IBOutlet weak var exerciseTitle: UITextField!
     @IBOutlet weak var weight: UITextField!
@@ -25,12 +29,17 @@ class StrengthExerciseViewController: UIViewController {
     }
     
     @IBAction func finishCompose(_ sender: Any) {
+        var currentUser = Auth.auth().currentUser?.email as! String
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+
         if validateInput() {
             let exerciseItem = Exercise()
             exerciseItem.type = self.type
             exerciseItem.description = exerciseTitle.text!
-            exerciseItem.reps = Float(reps.text!)
-            exerciseItem.weight = Float(weight.text!)
+            exerciseItem.reps = reps.text!
+            exerciseItem.weight = weight.text!
+            
+            self.ref?.child("exerciseEntry").child(currentUser).child(currentDate).childByAutoId().setValue(exerciseItem.toAnyObject())
             
             delegate?.finishNewStrength(exercise: exerciseItem)
             presentingViewController?.dismiss(animated: true, completion: nil)
@@ -67,6 +76,13 @@ class StrengthExerciseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        ref = Database.database().reference()
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        self.currentDate = formatter.string(from: currentDate)
+
 
         // Do any additional setup after loading the view.
     }
