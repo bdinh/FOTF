@@ -16,6 +16,7 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
     var ref: DatabaseReference?
 
     var exerciseLog = [Exercise]()
+    var exerciseDetail = Exercise()
     
     @IBOutlet weak var totalDistance: UILabel!
     @IBOutlet weak var totalMinutes: UILabel!
@@ -33,7 +34,7 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         
         exerciseTableView.allowsMultipleSelectionDuringEditing = true
         
-        var currentUser = Auth.auth().currentUser?.email as! String
+        var currentUser = (Auth.auth().currentUser?.email)!
         currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         
         ref = Database.database().reference()
@@ -145,7 +146,7 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            var currentUser = Auth.auth().currentUser?.email as! String
+            var currentUser = (Auth.auth().currentUser?.email)!
             currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
             let exerciseItem = userExerciseJournal[indexPath.section].exerciseList[indexPath.row].description
             let deletedate = userExerciseJournal[indexPath.section].date
@@ -185,6 +186,12 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         return cell
         
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.exerciseDetail = self.userExerciseJournal[indexPath.section].exerciseList[indexPath.row]
+        performSegue(withIdentifier: "exerciseSegue", sender: self)
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -197,6 +204,9 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier == "NewAerobicExercise" {
             let vc = segue.destination as! AerobicExerciseViewController
             vc.delegate = self
+        } else if segue.identifier == "exerciseSegue" {
+            let detailExerciseVC = segue.destination as! ExerciseDetailViewController
+            detailExerciseVC.exerciseObj = self.exerciseDetail
         } else {
             let vc = segue.destination as! StrengthExerciseViewController
             vc.delegate = self

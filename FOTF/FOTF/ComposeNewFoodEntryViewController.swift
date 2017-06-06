@@ -43,7 +43,7 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     
     @IBAction func finishCompose(_ sender: Any) {
         
-        var currentUser = Auth.auth().currentUser?.email as! String
+        var currentUser = (Auth.auth().currentUser?.email)!
         currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         selectedItem.qty = self.currentQuantity.text!
         self.ref?.child("foodEntry").child(currentUser).child(currentDate).childByAutoId().setValue(selectedItem.toAnyObject())
