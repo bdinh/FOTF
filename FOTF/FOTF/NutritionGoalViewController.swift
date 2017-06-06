@@ -13,9 +13,11 @@ import FirebaseDatabase
 class NutritionGoalViewController: UIViewController {
     
     var ref: DatabaseReference?
+
     @IBOutlet weak var endDatePicker: UIDatePicker!
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var calorieField: UITextField!
+    
     var earliestDate: String = ""
     
     @IBAction func cancelCompose(_ sender: Any) {
@@ -38,7 +40,7 @@ class NutritionGoalViewController: UIViewController {
             goalItem.start_date = start_date
             goalItem.end_date = end_date
             
-            self.ref?.child("goalEntry").child(currentUser).childByAutoId().setValue(goalItem.toAnyObject())
+            self.ref?.child("goalEntry").child(currentUser).child("Nutrition").setValue(goalItem.toAnyObject())
             print(goalItem)
 
             presentingViewController?.dismiss(animated: true, completion: nil)

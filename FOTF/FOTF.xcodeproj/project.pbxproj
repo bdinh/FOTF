@@ -31,6 +31,7 @@
 		6D90AB9C1EE0E7C10032EE6A /* AerobicExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90AB9B1EE0E7C10032EE6A /* AerobicExerciseViewController.swift */; };
 		6D90AB9E1EE10BD20032EE6A /* StrengthExerciseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90AB9D1EE10BD20032EE6A /* StrengthExerciseViewController.swift */; };
 		6DA6E6251ED7EE6000DE9E44 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DA6E6241ED7EE6000DE9E44 /* Food.swift */; };
+		6DB948A41EE7279800A3EF52 /* WeightLossGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB948A31EE7279800A3EF52 /* WeightLossGoalViewController.swift */; };
 		E34B37E81EE54B2800C0C7CC /* DateEntryExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34B37E71EE54B2800C0C7CC /* DateEntryExercise.swift */; };
 		E34B37EA1EE5517400C0C7CC /* ExerciseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34B37E91EE5517400C0C7CC /* ExerciseTableViewCell.swift */; };
 		E3CB2B491EE3DBE900D03436 /* DateEntryFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CB2B481EE3DBE900D03436 /* DateEntryFood.swift */; };
@@ -80,6 +81,7 @@
 		6D90AB9B1EE0E7C10032EE6A /* AerobicExerciseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AerobicExerciseViewController.swift; sourceTree = "<group>"; };
 		6D90AB9D1EE10BD20032EE6A /* StrengthExerciseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrengthExerciseViewController.swift; sourceTree = "<group>"; };
 		6DA6E6241ED7EE6000DE9E44 /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		6DB948A31EE7279800A3EF52 /* WeightLossGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeightLossGoalViewController.swift; sourceTree = "<group>"; };
 		824F4D912E6DF6E757212FFB /* Pods-FOTFTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTFTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FOTFTests/Pods-FOTFTests.release.xcconfig"; sourceTree = "<group>"; };
 		C09E9C8D81947AECB4B4FE96 /* Pods_FOTF.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FOTF.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E34B37E71EE54B2800C0C7CC /* DateEntryExercise.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateEntryExercise.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				46BA97461EE68D8400AD2340 /* GoalViewController.swift */,
 				46BA97481EE68DB200AD2340 /* ExerciseGoalViewController.swift */,
 				46BA974A1EE68DC400AD2340 /* NutritionGoalViewController.swift */,
+				6DB948A31EE7279800A3EF52 /* WeightLossGoalViewController.swift */,
 				E3F60E741EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift */,
 				6D90AB9B1EE0E7C10032EE6A /* AerobicExerciseViewController.swift */,
 				6D90AB9D1EE10BD20032EE6A /* StrengthExerciseViewController.swift */,
@@ -421,6 +424,7 @@
 				E3F60E751EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift in Sources */,
 				463A2A1B1EE0FBAB0076CCB9 /* FoodDetailViewController.swift in Sources */,
 				6D34A23B1ECE6E8800F7CCA1 /* ExerciseViewController.swift in Sources */,
+				6DB948A41EE7279800A3EF52 /* WeightLossGoalViewController.swift in Sources */,
 				6D90AB9C1EE0E7C10032EE6A /* AerobicExerciseViewController.swift in Sources */,
 				6D34A2371ECE6E8800F7CCA1 /* AppDelegate.swift in Sources */,
 				6D34A2591ECE709F00F7CCA1 /* AccountViewController.swift in Sources */,

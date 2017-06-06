@@ -22,6 +22,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var userFoodJournal: [DateEntryFood] = []
     var lastExerciseDay: String = ""
     var lastNutritionDay: String = ""
+    var exerciseType: String = ""
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return userGoalJournal.count
@@ -36,9 +37,22 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if goalObject.type == "Nutrition" {
             cell.goalName.text = "Calories"
             cell.goalValue.text = goalObject.progress + " / " + goalObject.calories
-        } else {
+        } else if goalObject.type == "Distance" {
             cell.goalName.text = "Distance"
-            cell.goalValue.text = goalObject.progress + " / " + goalObject.distance
+            cell.goalValue.text = goalObject.progress + " / " + goalObject.goalValue
+        } else if goalObject.type == "Time" {
+            cell.goalName.text = "Minutes"
+            cell.goalValue.text = goalObject.progress + " / " + goalObject.goalValue
+        } else if goalObject.type == "Weight" {
+            cell.goalName.text = "Weight Lifted"
+            cell.goalValue.text = goalObject.progress + " / " + goalObject.goalValue
+        } else if goalObject.type == "Reps" {
+            cell.goalName.text = "Reps"
+            cell.goalValue.text = goalObject.progress + " / " + goalObject.goalValue
+        } else {
+            cell.goalName.text = "Goal Weight"
+            cell.goalValue.text = goalObject.goalWeight
+            goalObject.status = ""
         }
         cell.status.text = goalObject.status
         return cell
@@ -50,19 +64,20 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
             var currentUser = (Auth.auth().currentUser?.email)!
             currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
             let goalItem = userGoalJournal[indexPath.row].type
-            let query = ref?.child("goalEntry").child(currentUser).queryOrdered(byChild: "type").queryEqual(toValue: goalItem)
+//            let query = ref?.child("goalEntry").child(currentUser).queryOrdered(byChild: "type").queryEqual(toValue: goalItem)
             
-            query?.observeSingleEvent(of: .value, with: { (snapshot) in
-                if let deleteSnap = snapshot.value as? [String: AnyObject] {
-                    var deleteID = ""
-                    for (key, value) in deleteSnap {
-                        deleteID = key
-                        print(deleteID)
-                    }
-                    self.ref?.child("goalEntry").child(currentUser).child(deleteID).removeValue()
-                }
-            })
-            self.goalTableView.reloadData()
+//            query?.observeSingleEvent(of: .value, with: { (snapshot) in
+//                if let deleteSnap = snapshot.value as? [String: AnyObject] {
+//                    var deleteID = ""
+//                    for (key, value) in deleteSnap {
+//                        deleteID = key
+//                        print(deleteID)
+//                    }
+//                    self.ref?.child("goalEntry").child(currentUser).child(deleteID).removeValue()
+//                }
+//            })
+            self.ref?.child("goalEntry").child(currentUser).child(goalItem).removeValue()
+//            self.goalTableView.reloadData()
         }
     }
 
@@ -143,7 +158,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Process goalObjecs data
         var newGoalObjects = [Goal]()
         for goalObject in self.userGoalJournal {
-            if goalObject.type == "Exercise" {
+            if goalObject.type == "Distance" || goalObject.type == "Time" || goalObject.type == "Weight" || goalObject.type == "Reps" {
                 if (goalObject.end_date > self.lastExerciseDay) {
                     self.lastExerciseDay = goalObject.end_date
                 }
@@ -152,17 +167,35 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     if (goalObject.start_date <= data.date && data.date <= goalObject.end_date) {
                         let currentExerciseList = data.exerciseList
                         for entry in currentExerciseList {
-                            if entry.distance != "" {
-                                progress += Double(entry.distance)!
+                            if goalObject.type == "Time" {
+                                if entry.duration != "" {
+                                    progress += Double(entry.duration)!
+                                }
+                            } else if goalObject.type == "Distance" {
+                                if entry.distance != "" {
+                                    progress += Double(entry.distance)!
+                                }
+                            } else if goalObject.type == "Weight" {
+                                if entry.weight != "" {
+                                    if Double(entry.weight)! > progress {
+                                        progress = Double(entry.weight)!
+                                    }
+                                }
+                            } else if goalObject.type == "Reps" {
+                                if entry.reps != "" {
+                                    if Double(entry.reps)! > progress {
+                                        progress = Double(entry.reps)!
+                                    }
+                                }
                             }
                         }
                     }
                 }
                 goalObject.progress = String(progress)
-                if (progress >= Double(goalObject.distance)!) {
+                if (progress >= Double(goalObject.goalValue)!) {
                     goalObject.status = "Complete"
                 }
-            } else {
+            } else if goalObject.type == "Nutrition" {
                 if (goalObject.end_date > self.lastNutritionDay) {
                     self.lastNutritionDay = goalObject.end_date
                 }
@@ -182,39 +215,41 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 if (progress >= Double(goalObject.calories)!) {
                     goalObject.status = "Complete"
                 }
-            }
+            } 
             newGoalObjects.append(goalObject)
         }
         self.userGoalJournal = newGoalObjects
     }
     
-    // GET RID OF THIS WHEN THERE IS A LINK WITH THE DATABASE
-//    func createMockData() {
-//        let newGoal = Goal()
-//        newGoal.type = "Exercise"
-//        newGoal.distance = "20"
-//        newGoal.start_date = "June 6, 2017"
-//        newGoal.end_date = "June 8, 2017"
-//        self.goalObjects.append(newGoal)
-//        
-//        let newGoal2 = Goal()
-//        newGoal2.type = "Nutrition"
-//        newGoal2.calories = "200"
-//        newGoal2.start_date = "June 7, 2017"
-//        newGoal2.end_date = "June 9, 2017"
-//        self.goalObjects.append(newGoal2)
-//    }
-    
-    
     @IBAction func composeNewGoal(_ sender: Any) {
         let alertController = UIAlertController(title: "Goal Type", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
         
-        alertController.addAction(UIAlertAction(title: "Nutrition", style:.default, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "Calorie Consumption", style:.default, handler: { (_) in
             self.performSegue(withIdentifier: "nutritionSegue", sender: self)
         }))
         
-        alertController.addAction(UIAlertAction(title: "Exercise", style:.default, handler: { (_) in
+        alertController.addAction(UIAlertAction(title: "Aerobic: Distance", style:.default, handler: { (_) in
+            self.exerciseType = "Distance"
             self.performSegue(withIdentifier: "exerciseSegue", sender: self)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Aerobic: Minutes", style:.default, handler: { (_) in
+            self.exerciseType = "Time"
+            self.performSegue(withIdentifier: "exerciseSegue", sender: self)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Strength: Weight", style:.default, handler: { (_) in
+            self.exerciseType = "Weight"
+            self.performSegue(withIdentifier: "exerciseSegue", sender: self)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Strength: Reps", style:.default, handler: { (_) in
+            self.exerciseType = "Reps"
+            self.performSegue(withIdentifier: "exerciseSegue", sender: self)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Weight Loss", style:.default, handler: { (_) in
+            self.performSegue(withIdentifier: "weightLossSegue", sender: self)
         }))
         
         alertController.addAction(UIAlertAction(title: "Cancel", style:.cancel))
@@ -228,7 +263,8 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if segue.identifier == "exerciseSegue" {
             let vc = segue.destination as! ExerciseGoalViewController
             vc.earliestDate = self.lastExerciseDay
-        } else {
+            vc.exerciseType = self.exerciseType
+        } else if segue.identifier == "nutritionSegue" {
             let vc = segue.destination as! NutritionGoalViewController
             vc.earliestDate = self.lastNutritionDay
         }
@@ -237,6 +273,8 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        goalTableView.delegate = self
+        goalTableView.dataSource = self
         
         goalTableView.allowsMultipleSelectionDuringEditing = true
         
@@ -256,22 +294,28 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if let dictionary = snapshot.value as? [String: AnyObject] {
                 for entry in dictionary {
                     let newGoal = Goal()
+                    print(entry.key)
+                    print(entry.value)
                     if let goalDetail = entry.value as? [String: String] {
                         newGoal.calories = goalDetail["calories"]!
-                        newGoal.distance = goalDetail["distance"]!
+                        newGoal.goalValue = goalDetail["goalValue"]!
                         newGoal.end_date = goalDetail["enddate"]!
                         newGoal.start_date = goalDetail["startdate"]!
                         newGoal.progress = goalDetail["progress"]!
                         newGoal.status = goalDetail["status"]!
                         newGoal.type = goalDetail["type"]!
+                        newGoal.currentWeight = goalDetail["currentWeight"]!
+                        newGoal.goalWeight = goalDetail["goalWeight"]!
+                        self.userGoalJournal.append(newGoal)
                     }
-                    self.userGoalJournal.append(newGoal)
                 }
                 print(self.userGoalJournal)
             }
         })
+        self.processGoals()
         self.processExercises()
         self.processNutrition()
+        self.goalTableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
