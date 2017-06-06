@@ -28,7 +28,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let goalObject = self.userGoalJournal[indexPath.row]//self.goalObjects[indexPath.row]
+        let goalObject = self.userGoalJournal[indexPath.row]
         let cell = goalTableView.dequeueReusableCell(withIdentifier: "goalCell") as! GoalTableViewCell
         cell.typeGoal.text = goalObject.type
         cell.start_date.text = goalObject.start_date
@@ -44,6 +44,28 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
         
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            var currentUser = (Auth.auth().currentUser?.email)!
+            currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+            let goalItem = userGoalJournal[indexPath.row].type
+            let query = ref?.child("goalEntry").child(currentUser).queryOrdered(byChild: "type").queryEqual(toValue: goalItem)
+            
+            query?.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let deleteSnap = snapshot.value as? [String: AnyObject] {
+                    var deleteID = ""
+                    for (key, value) in deleteSnap {
+                        deleteID = key
+                        print(deleteID)
+                    }
+                    self.ref?.child("goalEntry").child(currentUser).child(deleteID).removeValue()
+                }
+            })
+            self.goalTableView.reloadData()
+        }
+    }
+
     
     func processExercises() {
         var currentUser = (Auth.auth().currentUser?.email)!
@@ -107,7 +129,6 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
                                 newFoodEntry.qty = foodDetail["qty"]!
                                 newDate.foodList.append(newFoodEntry)
                             }
-                            
                         }
                     }
                     self.userFoodJournal.append(newDate)
@@ -121,7 +142,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func processGoals() {
         // Process goalObjecs data
         var newGoalObjects = [Goal]()
-        for goalObject in self.goalObjects {
+        for goalObject in self.userGoalJournal {
             if goalObject.type == "Exercise" {
                 if (goalObject.end_date > self.lastExerciseDay) {
                     self.lastExerciseDay = goalObject.end_date
@@ -164,25 +185,25 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             newGoalObjects.append(goalObject)
         }
-        self.goalObjects = newGoalObjects
+        self.userGoalJournal = newGoalObjects
     }
     
     // GET RID OF THIS WHEN THERE IS A LINK WITH THE DATABASE
-    func createMockData() {
-        let newGoal = Goal()
-        newGoal.type = "Exercise"
-        newGoal.distance = "20"
-        newGoal.start_date = "June 6, 2017"
-        newGoal.end_date = "June 8, 2017"
-        self.goalObjects.append(newGoal)
-        
-        let newGoal2 = Goal()
-        newGoal2.type = "Nutrition"
-        newGoal2.calories = "200"
-        newGoal2.start_date = "June 7, 2017"
-        newGoal2.end_date = "June 9, 2017"
-        self.goalObjects.append(newGoal2)
-    }
+//    func createMockData() {
+//        let newGoal = Goal()
+//        newGoal.type = "Exercise"
+//        newGoal.distance = "20"
+//        newGoal.start_date = "June 6, 2017"
+//        newGoal.end_date = "June 8, 2017"
+//        self.goalObjects.append(newGoal)
+//        
+//        let newGoal2 = Goal()
+//        newGoal2.type = "Nutrition"
+//        newGoal2.calories = "200"
+//        newGoal2.start_date = "June 7, 2017"
+//        newGoal2.end_date = "June 9, 2017"
+//        self.goalObjects.append(newGoal2)
+//    }
     
     
     @IBAction func composeNewGoal(_ sender: Any) {
@@ -217,6 +238,8 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        goalTableView.allowsMultipleSelectionDuringEditing = true
+        
         let currentDate = Date()
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -246,12 +269,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
                 print(self.userGoalJournal)
             }
-            self.goalTableView.reloadData()
         })
-        
-        // CREATE MOCK DATA
-        self.createMockData()
-        // REPLACE MOCK DATA WITH DATA FROM THE DATABASE
         self.processExercises()
         self.processNutrition()
     }
