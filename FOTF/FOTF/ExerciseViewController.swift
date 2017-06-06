@@ -66,8 +66,7 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
             self.exerciseTableView.reloadData()
             self.updateStatistics()
         })
-        
-        
+
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -83,7 +82,6 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         formatter.timeStyle = .none
         
         let TodayDate = formatter.string(from: currentDate)
-        
         for date in self.userExerciseJournal {
             let newDate = formatter.date(from: date.date)
             let lastWeekDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())

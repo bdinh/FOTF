@@ -111,10 +111,6 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.updateStatistics()
         })
         self.userFoodJournal.reverse()
-        
-        
-
-        
 
     }
 

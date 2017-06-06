@@ -10,6 +10,11 @@
 		134066092CEEBF826E7D9D0C /* Pods_FOTF.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C09E9C8D81947AECB4B4FE96 /* Pods_FOTF.framework */; };
 		463A2A1B1EE0FBAB0076CCB9 /* FoodDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463A2A1A1EE0FBAB0076CCB9 /* FoodDetailViewController.swift */; };
 		46BA973B1EE64DCA00AD2340 /* ExerciseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BA973A1EE64DCA00AD2340 /* ExerciseDetailViewController.swift */; };
+		46BA97451EE67F0800AD2340 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BA97441EE67F0800AD2340 /* Goal.swift */; };
+		46BA97471EE68D8400AD2340 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BA97461EE68D8400AD2340 /* GoalViewController.swift */; };
+		46BA97491EE68DB200AD2340 /* ExerciseGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BA97481EE68DB200AD2340 /* ExerciseGoalViewController.swift */; };
+		46BA974B1EE68DC400AD2340 /* NutritionGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BA974A1EE68DC400AD2340 /* NutritionGoalViewController.swift */; };
+		46BA97511EE6B49D00AD2340 /* GoalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46BA97501EE6B49D00AD2340 /* GoalTableViewCell.swift */; };
 		4F59A3B47917FF02D587BD93 /* Pods_FOTFTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F37F85C6540F8C693422EFB /* Pods_FOTFTests.framework */; };
 		695C9EC51EE3A20D003DB272 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695C9EC41EE3A20D003DB272 /* EditAccountViewController.swift */; };
 		69F17B491EE0A4B500AF69BD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F17B481EE0A4B500AF69BD /* User.swift */; };
@@ -32,7 +37,6 @@
 		E3F60E751EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F60E741EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift */; };
 		E3FF60391ECEA8F0002CD4F4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FF60381ECEA8F0002CD4F4 /* LoginViewController.swift */; };
 		E3FF603C1ECEA979002CD4F4 /* LoginTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FF603B1ECEA979002CD4F4 /* LoginTextField.swift */; };
-		E3FF603E1ECED0C4002CD4F4 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FF603D1ECED0C4002CD4F4 /* GoalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,11 @@
 		30A06DD6734BB825B7C16E92 /* Pods-FOTF.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTF.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FOTF/Pods-FOTF.debug.xcconfig"; sourceTree = "<group>"; };
 		463A2A1A1EE0FBAB0076CCB9 /* FoodDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDetailViewController.swift; sourceTree = "<group>"; };
 		46BA973A1EE64DCA00AD2340 /* ExerciseDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseDetailViewController.swift; sourceTree = "<group>"; };
+		46BA97441EE67F0800AD2340 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
+		46BA97461EE68D8400AD2340 /* GoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
+		46BA97481EE68DB200AD2340 /* ExerciseGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExerciseGoalViewController.swift; sourceTree = "<group>"; };
+		46BA974A1EE68DC400AD2340 /* NutritionGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NutritionGoalViewController.swift; sourceTree = "<group>"; };
+		46BA97501EE6B49D00AD2340 /* GoalTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalTableViewCell.swift; sourceTree = "<group>"; };
 		5B40344CDAE4BE6D7F73E0DD /* Pods-FOTF.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FOTF.release.xcconfig"; path = "Pods/Target Support Files/Pods-FOTF/Pods-FOTF.release.xcconfig"; sourceTree = "<group>"; };
 		695C9EC41EE3A20D003DB272 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
 		69F17B481EE0A4B500AF69BD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -79,7 +88,6 @@
 		E3F60E741EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeNewFoodEntryViewController.swift; sourceTree = "<group>"; };
 		E3FF60381ECEA8F0002CD4F4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3FF603B1ECEA979002CD4F4 /* LoginTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTextField.swift; sourceTree = "<group>"; };
-		E3FF603D1ECED0C4002CD4F4 /* GoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,9 +181,12 @@
 				6D34A2381ECE6E8800F7CCA1 /* FoodViewController.swift */,
 				6DA6E6241ED7EE6000DE9E44 /* Food.swift */,
 				6D90AB991EE0E6CD0032EE6A /* Exercise.swift */,
+				46BA97441EE67F0800AD2340 /* Goal.swift */,
 				6D34A23A1ECE6E8800F7CCA1 /* ExerciseViewController.swift */,
 				6D34A2581ECE709F00F7CCA1 /* AccountViewController.swift */,
-				E3FF603D1ECED0C4002CD4F4 /* GoalViewController.swift */,
+				46BA97461EE68D8400AD2340 /* GoalViewController.swift */,
+				46BA97481EE68DB200AD2340 /* ExerciseGoalViewController.swift */,
+				46BA974A1EE68DC400AD2340 /* NutritionGoalViewController.swift */,
 				E3F60E741EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift */,
 				6D90AB9B1EE0E7C10032EE6A /* AerobicExerciseViewController.swift */,
 				6D90AB9D1EE10BD20032EE6A /* StrengthExerciseViewController.swift */,
@@ -194,6 +205,7 @@
 			children = (
 				E3FF603B1ECEA979002CD4F4 /* LoginTextField.swift */,
 				E34B37E91EE5517400C0C7CC /* ExerciseTableViewCell.swift */,
+				46BA97501EE6B49D00AD2340 /* GoalTableViewCell.swift */,
 			);
 			name = UIClasses;
 			sourceTree = "<group>";
@@ -401,14 +413,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E3FF603E1ECED0C4002CD4F4 /* GoalViewController.swift in Sources */,
 				E34B37E81EE54B2800C0C7CC /* DateEntryExercise.swift in Sources */,
+				46BA97471EE68D8400AD2340 /* GoalViewController.swift in Sources */,
+				46BA97511EE6B49D00AD2340 /* GoalTableViewCell.swift in Sources */,
+				46BA974B1EE68DC400AD2340 /* NutritionGoalViewController.swift in Sources */,
+				46BA97491EE68DB200AD2340 /* ExerciseGoalViewController.swift in Sources */,
 				E3F60E751EDD6F7A00730BAD /* ComposeNewFoodEntryViewController.swift in Sources */,
 				463A2A1B1EE0FBAB0076CCB9 /* FoodDetailViewController.swift in Sources */,
 				6D34A23B1ECE6E8800F7CCA1 /* ExerciseViewController.swift in Sources */,
 				6D90AB9C1EE0E7C10032EE6A /* AerobicExerciseViewController.swift in Sources */,
 				6D34A2371ECE6E8800F7CCA1 /* AppDelegate.swift in Sources */,
 				6D34A2591ECE709F00F7CCA1 /* AccountViewController.swift in Sources */,
+				46BA97451EE67F0800AD2340 /* Goal.swift in Sources */,
 				6D90AB9A1EE0E6CD0032EE6A /* Exercise.swift in Sources */,
 				E3FF603C1ECEA979002CD4F4 /* LoginTextField.swift in Sources */,
 				6DA6E6251ED7EE6000DE9E44 /* Food.swift in Sources */,
