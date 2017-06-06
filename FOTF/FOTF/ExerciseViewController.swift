@@ -16,101 +16,23 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
     var ref: DatabaseReference?
 
     var exerciseLog = [Exercise]()
-    var weeklyStatistics: [String: Float] = [
-        "distance": 0,
-        "minutes": 0,
-        "weight": 0,
-        "reps": 0
-    ]
     
     @IBOutlet weak var totalDistance: UILabel!
     @IBOutlet weak var totalMinutes: UILabel!
     @IBOutlet weak var maxWeight: UILabel!
     @IBOutlet weak var maxReps: UILabel!
 
-    func finishNewAerobic(exercise newExercise: Exercise) {
-//        if newExercise.distance != nil {
-//            weeklyStatistics["distance"]! += newExercise.distance!
-//        }
-//        weeklyStatistics["minutes"]! += newExercise.duration!
-//        
-//        totalMinutes.text! = "\(weeklyStatistics["minutes"]!) minutes"
-//        totalDistance.text! = "\(weeklyStatistics["distance"]!) miles"
-//        
-//        self.exerciseLog.append(newExercise)
-//        exerciseTableView.reloadData()
-    }
+    func finishNewAerobic(exercise newExercise: Exercise) { }
     
-    func finishNewStrength(exercise newExercise: Exercise) {
-//        if Float(newExercise.reps!) > weeklyStatistics["reps"]! {
-//            weeklyStatistics["reps"] = newExercise.reps
-//        }
-//        if newExercise.weight != nil && Float(newExercise.weight!) > weeklyStatistics["weight"]! {
-//            weeklyStatistics["weight"] = newExercise.weight
-//        }
-//        
-//        maxWeight.text! = "\(weeklyStatistics["weight"]!) lbs"
-//        maxReps.text! = "\(weeklyStatistics["reps"]!) reps"
-//        
-//        self.exerciseLog.append(newExercise)
-//        exerciseTableView.reloadData()
-    }
+    func finishNewStrength(exercise newExercise: Exercise) { }
     
-    @IBOutlet weak var exerciseTableView: UITableView!
-    
-    @IBAction func composeNewExercise(_ sender: Any) {
-        let alertController = UIAlertController(title: "Exercise Type", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
-        
-        alertController.addAction(UIAlertAction(title: "Aerobic", style:.default, handler: { (_) in
-            self.performSegue(withIdentifier: "NewAerobicExercise", sender: self)
-        }))
-        
-        alertController.addAction(UIAlertAction(title: "Strength", style:.default, handler: { (_) in
-            self.performSegue(withIdentifier: "NewStrengthExercise", sender: self)
-        }))
-        
-        alertController.addAction(UIAlertAction(title: "Cancel", style:.cancel))
-
-        self.present(alertController, animated: true)
-
-    }
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // will have it based on dates
-        return userExerciseJournal.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userExerciseJournal[section].exerciseList.count
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return userExerciseJournal[section].date
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let exercise = userExerciseJournal[indexPath.section].exerciseList[indexPath.row]
-        let cell = exerciseTableView.dequeueReusableCell(withIdentifier: "exerciseCell") as! ExerciseTableViewCell
-        
-        cell.exerciseName.text = exercise.description
-        if exercise.type == "Aerobic" {
-            cell.exerciseAmount.text = exercise.duration + " minutes"
-            cell.exerciseImage.image = #imageLiteral(resourceName: "Running_25")
-        } else {
-            cell.exerciseAmount.text = exercise.reps + " reps"
-            cell.exerciseImage.image = #imageLiteral(resourceName: "strength")
-        }
-        return cell
-        
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         exerciseTableView.delegate = self
         exerciseTableView.dataSource = self
         
         exerciseTableView.allowsMultipleSelectionDuringEditing = true
-
+        
         var currentUser = Auth.auth().currentUser?.email as! String
         currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         
@@ -140,11 +62,128 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             self.exerciseTableView.reloadData()
-//            self.updateStatistics()
+            self.updateStatistics()
         })
-
+        
         
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func updateStatistics() {
+        var distance = 0.0
+        var duration = 0.0
+        var weight = 0.0
+        var reps = 0.0
+        
+        let currentDate = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+        let TodayDate = formatter.string(from: currentDate)
+        
+        for date in self.userExerciseJournal {
+            if date.date == TodayDate {
+                let currentDateExerciseList = date.exerciseList
+                for entry in currentDateExerciseList {
+                    if entry.distance != ""{
+                        distance += Double(entry.distance)!
+                    }
+                    if entry.duration != "" {
+                        duration += Double(entry.duration)!
+                    }
+                    if entry.weight != "" {
+                        if Double(entry.weight)! > weight {
+                            weight = Double(entry.weight)!
+                        }
+                    }
+                    if entry.reps != "" {
+                        if Double(entry.reps)! > reps {
+                            reps = Double(entry.reps)!
+                        }
+                    }
+                }
+                
+            }
+        }
+        self.totalDistance.text = String(distance) + " miles"
+        self.totalMinutes.text = String(duration) + " minutes"
+        self.maxReps.text = String(reps) + " reps"
+        self.maxWeight.text = String(weight) + " lbs"
+    }
+    
+    @IBOutlet weak var exerciseTableView: UITableView!
+    
+    @IBAction func composeNewExercise(_ sender: Any) {
+        let alertController = UIAlertController(title: "Exercise Type", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Aerobic", style:.default, handler: { (_) in
+            self.performSegue(withIdentifier: "NewAerobicExercise", sender: self)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Strength", style:.default, handler: { (_) in
+            self.performSegue(withIdentifier: "NewStrengthExercise", sender: self)
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style:.cancel))
+
+        self.present(alertController, animated: true)
+
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        // will have it based on dates
+        return userExerciseJournal.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return userExerciseJournal[section].exerciseList.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return userExerciseJournal[section].date
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            var currentUser = Auth.auth().currentUser?.email as! String
+            currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+            let exerciseItem = userExerciseJournal[indexPath.section].exerciseList[indexPath.row].description
+            let deletedate = userExerciseJournal[indexPath.section].date
+            
+            let query = ref?.child("exerciseEntry").child(currentUser).child(deletedate).queryOrdered(byChild: "description").queryEqual(toValue: exerciseItem)
+            
+            
+            
+            query?.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let deleteSnap = snapshot.value as? [String: AnyObject] {
+                    var deleteID = ""
+                    for (key, value) in deleteSnap {
+                        deleteID = key
+                        print(deleteID)
+                    }
+                    self.ref?.child("exerciseEntry").child(currentUser).child(deletedate).child(deleteID).removeValue()
+                }
+            })
+        }
+        self.updateStatistics()
+    }
+
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let exercise = userExerciseJournal[indexPath.section].exerciseList[indexPath.row]
+        let cell = exerciseTableView.dequeueReusableCell(withIdentifier: "exerciseCell") as! ExerciseTableViewCell
+        
+        cell.exerciseName.text = exercise.description
+        if exercise.type == "Aerobic" {
+            cell.exerciseAmount.text = exercise.duration + " minutes"
+            cell.exerciseImage.image = #imageLiteral(resourceName: "Running_25")
+        } else {
+            cell.exerciseAmount.text = exercise.reps + " reps"
+            cell.exerciseImage.image = #imageLiteral(resourceName: "strength")
+        }
+        return cell
+        
     }
 
     override func didReceiveMemoryWarning() {
