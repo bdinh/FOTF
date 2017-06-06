@@ -62,6 +62,7 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.userExerciseJournal.append(newDate)
                 }
             }
+            self.userExerciseJournal.reverse()
             self.exerciseTableView.reloadData()
             self.updateStatistics()
         })

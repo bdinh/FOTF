@@ -34,7 +34,8 @@ class FoodDetailViewController: UIViewController {
         let baseurl = "https://www.googleapis.com/customsearch/v1?"
         let apiKey = "key=AIzaSyChekpdvPC4houyNdtzyfGGkuTdZwf0DJE"
         let consoleID = "&cx=016670613649737080400:ky0c7sahduk"
-        let searchTerm = "&q=" + String((foodObject?.title)!)! + "+food"
+        let foodTerm = String((foodObject?.title)!)!.replacingOccurrences(of: " ", with: "+")
+        let searchTerm = "&q=" + foodTerm + "+food"
         let extraparam = "&searchType=image&filetype=jpg&num=1"
         var link = ""
         Alamofire.request(baseurl+apiKey+consoleID+searchTerm+extraparam).validate().responseJSON { response in
