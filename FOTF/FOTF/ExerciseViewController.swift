@@ -69,48 +69,57 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Do any additional setup after loading the view, typically from a nib.
     }
-    
+
     func updateStatistics() {
         var distance = 0.0
         var duration = 0.0
         var weight = 0.0
         var reps = 0.0
-        
+
         let currentDate = Date()
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
+        
         let TodayDate = formatter.string(from: currentDate)
         
         for date in self.userExerciseJournal {
-            if date.date == TodayDate {
+            let newDate = formatter.date(from: date.date)
+            let lastWeekDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())
+            
+            if newDate! >= lastWeekDate! && newDate! <= currentDate {
                 let currentDateExerciseList = date.exerciseList
+                
                 for entry in currentDateExerciseList {
-                    if entry.distance != ""{
+                    if entry.distance != "" {
                         distance += Double(entry.distance)!
                     }
+                        
                     if entry.duration != "" {
                         duration += Double(entry.duration)!
                     }
+                        
                     if entry.weight != "" {
                         if Double(entry.weight)! > weight {
                             weight = Double(entry.weight)!
                         }
                     }
+                        
                     if entry.reps != "" {
                         if Double(entry.reps)! > reps {
                             reps = Double(entry.reps)!
                         }
                     }
                 }
-                
             }
         }
+        
         self.totalDistance.text = String(distance) + " miles"
         self.totalMinutes.text = String(duration) + " minutes"
         self.maxReps.text = String(reps) + " reps"
         self.maxWeight.text = String(weight) + " lbs"
     }
+
     
     @IBOutlet weak var exerciseTableView: UITableView!
     
