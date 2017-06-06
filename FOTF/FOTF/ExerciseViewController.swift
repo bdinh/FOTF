@@ -65,8 +65,7 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
             self.exerciseTableView.reloadData()
             self.updateStatistics()
         })
-        
-        
+
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -81,7 +80,6 @@ class ExerciseViewController: UIViewController, UITableViewDataSource, UITableVi
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         let TodayDate = formatter.string(from: currentDate)
-        
         for date in self.userExerciseJournal {
             if date.date == TodayDate {
                 let currentDateExerciseList = date.exerciseList
