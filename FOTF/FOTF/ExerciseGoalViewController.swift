@@ -58,8 +58,7 @@ class ExerciseGoalViewController: UIViewController {
         let end_date = endDatePicker.date
         if (start_date < end_date) {
             print("reached in")
-            print(earlyDate)
-            if ((exerciseField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
+            if ((exerciseField.text?.characters.count)! > 0) {// && (start_date >= Date())) {//earlyDate)) {
                 isValid = true
             }
         }

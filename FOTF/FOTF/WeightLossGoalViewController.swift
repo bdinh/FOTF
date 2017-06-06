@@ -57,7 +57,7 @@ class WeightLossGoalViewController: UIViewController {
         let end_date = endDatePicker.date
         if (start_date < end_date) {
             print("reached in")
-            if ((currentWeightField.text?.characters.count)! > 0 && (goalWeightField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
+            if ((currentWeightField.text?.characters.count)! > 0) { // && (goalWeightField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
                 isValid = true
             }
         }

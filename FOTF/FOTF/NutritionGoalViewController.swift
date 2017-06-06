@@ -58,8 +58,7 @@ class NutritionGoalViewController: UIViewController {
         let start_date = startDatePicker.date
         let end_date = endDatePicker.date
         if (start_date < end_date) {
-            print("reached in")
-            if ((calorieField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
+            if ((calorieField.text?.characters.count)! > 0) { // && (start_date > earlyDate)) {
                 isValid = true
             }
         }
