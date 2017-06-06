@@ -23,6 +23,8 @@ class NutritionGoalViewController: UIViewController {
     }
     
     @IBAction func finishCompose(_ sender: Any) {
+        var currentUser = (Auth.auth().currentUser?.email)!
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         if validateInput() == true {
             let formatter = DateFormatter()
             formatter.dateStyle = .long
@@ -30,10 +32,18 @@ class NutritionGoalViewController: UIViewController {
             let start_date = formatter.string(from: startDatePicker.date)
             let end_date = formatter.string(from: endDatePicker.date)
             // Save this data to the database as a GOAL OBJECT
-            print(start_date)
-            print(end_date)
+            let goalItem = Goal()
+            goalItem.type = "Nutrition"
+            goalItem.calories = self.calorieField.text!
+            goalItem.start_date = start_date
+            goalItem.end_date = end_date
+            
+            self.ref?.child("goalEntry").child(currentUser).childByAutoId().setValue(goalItem.toAnyObject())
+            print(goalItem)
+
             presentingViewController?.dismiss(animated: true, completion: nil)
         }
+        
     }
     
     func validateInput() -> Bool {
@@ -41,10 +51,11 @@ class NutritionGoalViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
+        earliestDate = formatter.string(from: Date())
         let start_date = formatter.string(from: startDatePicker.date)
         let end_date = formatter.string(from: endDatePicker.date)
         if (start_date < end_date) {
-            if ((calorieField.text?.characters.count)! > 0 && (start_date > earliestDate)) {
+            if ((calorieField.text?.characters.count)! > 0 && (start_date >= earliestDate)) {
                 isValid = true
             }
         }
@@ -59,6 +70,7 @@ class NutritionGoalViewController: UIViewController {
 
 
     override func viewDidLoad() {
+        ref = Database.database().reference()
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.

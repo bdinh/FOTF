@@ -13,7 +13,10 @@ import FirebaseDatabase
 class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var goalTableView: UITableView!
+    
     var ref: DatabaseReference?
+    var userGoalJournal = [Goal]()
+    
     var goalObjects = [Goal]()
     var userExerciseJournal: [DateEntryExercise] = []
     var userFoodJournal: [DateEntryFood] = []
@@ -26,7 +29,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let goalObject = self.goalObjects[indexPath.row]
+        let goalObject = self.userGoalJournal[indexPath.row]//self.goalObjects[indexPath.row]
         let cell = goalTableView.dequeueReusableCell(withIdentifier: "goalCell") as! GoalTableViewCell
         cell.typeGoal.text = goalObject.type
         cell.start_date.text = goalObject.start_date
@@ -221,6 +224,31 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         formatter.timeStyle = .none
         self.lastExerciseDay = formatter.string(from: currentDate)
         self.lastNutritionDay = formatter.string(from: currentDate)
+        
+        var currentUser = (Auth.auth().currentUser?.email)!
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+        
+        ref = Database.database().reference()
+        ref?.child("goalEntry").child(currentUser).observe(.value, with: { (snapshot) in
+            self.userGoalJournal = []
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                for entry in dictionary {
+                    let newGoal = Goal()
+                    if let goalDetail = entry.value as? [String: String] {
+                        newGoal.calories = goalDetail["calories"]!
+                        newGoal.distance = goalDetail["distance"]!
+                        newGoal.end_date = goalDetail["enddate"]!
+                        newGoal.start_date = goalDetail["startdate"]!
+                        newGoal.progress = goalDetail["progress"]!
+                        newGoal.status = goalDetail["status"]!
+                        newGoal.type = goalDetail["type"]!
+                    }
+                    self.userGoalJournal.append(newGoal)
+                }
+                print(self.userGoalJournal)
+            }
+            self.goalTableView.reloadData()
+        })
         
         // CREATE MOCK DATA
         self.createMockData()

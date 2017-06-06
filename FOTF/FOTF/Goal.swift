@@ -18,4 +18,16 @@ class Goal {
     // progress and status are natively computed on the device
     var progress: String = ""
     var status: String = "Incomplete"
+    
+    public func toAnyObject() -> Any {
+        return [
+            "type": self.type,
+            "startdate": self.start_date,
+            "enddate": self.end_date,
+            "distance": self.distance,
+            "calories": self.calories,
+            "progress": self.progress,
+            "status": self.status
+        ]
+    }
 }
