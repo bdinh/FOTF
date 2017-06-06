@@ -9,11 +9,13 @@
 import Foundation
 
 class Goal {
-    // type holds either Nutrition or Exercise
+    // types include Nutrition, Distance, Time, Weight, Reps, and Weight Loss
     var type: String = ""
+    var currentWeight: String = ""
+    var goalWeight: String = ""
     var start_date: String = ""
     var end_date: String = ""
-    var distance: String = ""
+    var goalValue: String = ""
     var calories: String = ""
     // progress and status are natively computed on the device
     var progress: String = ""
@@ -22,12 +24,14 @@ class Goal {
     public func toAnyObject() -> Any {
         return [
             "type": self.type,
+            "currentWeight": self.currentWeight,
+            "goalWeight": self.goalWeight,
             "startdate": self.start_date,
             "enddate": self.end_date,
-            "distance": self.distance,
             "calories": self.calories,
             "progress": self.progress,
-            "status": self.status
+            "status": self.status,
+            "goalValue": self.goalValue
         ]
     }
 }

@@ -1,8 +1,8 @@
 //
-//  ExerciseGoalViewController.swift
+//  WeightLossGoalViewController.swift
 //  FOTF
 //
-//  Created by Abhishek Chauhan on 6/6/17.
+//  Created by Sabrina Niklaus on 6/6/17.
 //  Copyright © 2017 info-449. All rights reserved.
 //
 
@@ -10,27 +10,25 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
-class ExerciseGoalViewController: UIViewController {
+class WeightLossGoalViewController: UIViewController {
     
     var ref: DatabaseReference?
-    @IBOutlet weak var exerciseField: UITextField!
-    @IBOutlet weak var exerciseLabel: UILabel!
     
+    @IBOutlet weak var currentWeightField: UITextField!
+    @IBOutlet weak var goalWeightField: UITextField!
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var endDatePicker: UIDatePicker!
-    
-    var earliestDate: String = ""
-    var exerciseType: String = ""
+
+    var goalType: String = "WeightLoss"
     
     @IBAction func cancelCompose(_ sender: Any) {
         presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-
     @IBAction func finishCompose(_ sender: Any) {
+        var currentUser = (Auth.auth().currentUser?.email)!
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         if validateInput() == true {
-            var currentUser = (Auth.auth().currentUser?.email)!
-            currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
             let formatter = DateFormatter()
             formatter.dateStyle = .long
             formatter.timeStyle = .none
@@ -38,14 +36,15 @@ class ExerciseGoalViewController: UIViewController {
             let end_date = formatter.string(from: endDatePicker.date)
             // Save this data to the database as a GOAL OBJECT
             let goalItem = Goal()
-            goalItem.type = self.exerciseType//"Exercise"
-            goalItem.goalValue = self.exerciseField.text!
+            goalItem.type = self.goalType
+            goalItem.currentWeight = self.currentWeightField.text!
+            goalItem.goalWeight = self.goalWeightField.text!
             goalItem.start_date = start_date
             goalItem.end_date = end_date
-            
-            self.ref?.child("goalEntry").child(currentUser).child(self.exerciseType).setValue(goalItem.toAnyObject())
+            self.ref?.child("goalEntry").child(currentUser).child(self.goalType).setValue(goalItem.toAnyObject())            
             presentingViewController?.dismiss(animated: true, completion: nil)
         }
+        
     }
     
     func validateInput() -> Bool {
@@ -53,12 +52,12 @@ class ExerciseGoalViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
-        let earlyDate = formatter.date(from: self.earliestDate)!
+        let earlyDate = Date()
         let start_date = startDatePicker.date
         let end_date = endDatePicker.date
         if (start_date < end_date) {
             print("reached in")
-            if ((exerciseField.text?.characters.count)! > 0) {// && (start_date >= Date())) {//earlyDate)) {
+            if ((currentWeightField.text?.characters.count)! > 0) { // && (goalWeightField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
                 isValid = true
             }
         }
@@ -71,25 +70,17 @@ class ExerciseGoalViewController: UIViewController {
         return isValid
     }
     
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        if self.exerciseType == "Distance" {
-            self.exerciseLabel.text = "Distance (miles)"
-        } else if self.exerciseType == "Time" {
-            self.exerciseLabel.text = "Time (minutes)"
-        } else if self.exerciseType == "Weight" {
-            self.exerciseLabel.text = "Weight (lbs)"
-        } else if self.exerciseType == "Reps" {
-            self.exerciseLabel.text = "Reps"
-        }
         ref = Database.database().reference()
-        // Do any additional setup after loading the view.
+        super.viewDidLoad()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
     
 
     /*
