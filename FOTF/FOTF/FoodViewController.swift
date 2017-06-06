@@ -106,9 +106,11 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.userFoodJournal.append(newDate)
                 }
             }
+            self.userFoodJournal.reverse()
             self.foodTableView.reloadData()
             self.updateStatistics()
         })
+        self.userFoodJournal.reverse()
 
     }
 

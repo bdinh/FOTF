@@ -34,7 +34,8 @@ class FoodDetailViewController: UIViewController {
         let baseurl = "https://www.googleapis.com/customsearch/v1?"
         let apiKey = "key=AIzaSyChekpdvPC4houyNdtzyfGGkuTdZwf0DJE"
         let consoleID = "&cx=016670613649737080400:ky0c7sahduk"
-        let searchTerm = "&q=" + String((foodObject?.title)!)! + "+food"
+        let foodTerm = String((foodObject?.title)!)!.replacingOccurrences(of: " ", with: "+")
+        let searchTerm = "&q=" + foodTerm + "+food"
         let extraparam = "&searchType=image&filetype=jpg&num=1"
         var link = ""
         Alamofire.request(baseurl+apiKey+consoleID+searchTerm+extraparam).validate().responseJSON { response in
@@ -74,15 +75,21 @@ class FoodDetailViewController: UIViewController {
     
     func populateWithData() {
         if self.foodObject != nil {
+            let quantity = self.foodObject!.qty
+            var servingString = "serving"
+            if Double(quantity)! > 1.0 {
+                servingString = "servings"
+            }
             self.titleField.text = self.foodObject!.title
             self.brandName.text = self.foodObject!.brand
-            self.servingSize.text = self.foodObject!.servingSize + " " + self.foodObject!.servingUnit
-            self.calorieField.text = self.foodObject!.calories + " kcal"
-            self.fatField.text = self.foodObject!.fat + " grams"
-            self.sodiumField.text = self.foodObject!.sodium + " milligrams"
-            self.cholesterolField.text = self.foodObject!.cholesterol + " milligrams"
-            self.sugarField.text = self.foodObject!.sugar + " grams"
-            self.proteinField.text = self.foodObject!.protein + " grams"
+            self.servingSize.text = "\(self.foodObject!.servingSize) \(self.foodObject!.servingUnit) - \(quantity) \(servingString)"
+            self.calorieField.text = "\(Double(quantity)! * Double(self.foodObject!.calories)!) kcal"
+            self.fatField.text = "\(Double(quantity)! * Double(self.foodObject!.fat)!) grams"
+            self.sodiumField.text = "\(Double(quantity)! * Double(self.foodObject!.sodium)!) milligrams"
+            self.cholesterolField.text = "\(Double(quantity)! * Double(self.foodObject!.cholesterol)!) milligrams"
+            self.sugarField.text = "\(Double(quantity)! * Double(self.foodObject!.sugar)!) grams"
+            self.proteinField.text = "\(Double(quantity)! * Double(self.foodObject!.protein)!) grams"
+            
         }
     }
 
