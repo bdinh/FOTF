@@ -18,6 +18,7 @@ class NutritionGoalViewController: UIViewController {
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var calorieField: UITextField!
     
+    var goalType: String = "Nutrition"
     var earliestDate: String = ""
     
     @IBAction func cancelCompose(_ sender: Any) {
@@ -35,12 +36,12 @@ class NutritionGoalViewController: UIViewController {
             let end_date = formatter.string(from: endDatePicker.date)
             // Save this data to the database as a GOAL OBJECT
             let goalItem = Goal()
-            goalItem.type = "Nutrition"
+            goalItem.type = self.goalType
             goalItem.calories = self.calorieField.text!
             goalItem.start_date = start_date
             goalItem.end_date = end_date
             
-            self.ref?.child("goalEntry").child(currentUser).child("Nutrition").setValue(goalItem.toAnyObject())
+            self.ref?.child("goalEntry").child(currentUser).child(self.goalType).setValue(goalItem.toAnyObject())
             print(goalItem)
 
             presentingViewController?.dismiss(animated: true, completion: nil)
@@ -53,16 +54,17 @@ class NutritionGoalViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
-        earliestDate = formatter.string(from: Date())
-        let start_date = formatter.string(from: startDatePicker.date)
-        let end_date = formatter.string(from: endDatePicker.date)
+        let earlyDate = formatter.date(from: self.earliestDate)!
+        let start_date = startDatePicker.date
+        let end_date = endDatePicker.date
         if (start_date < end_date) {
-            if ((calorieField.text?.characters.count)! > 0 && (start_date >= earliestDate)) {
+            print("reached in")
+            if ((calorieField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
                 isValid = true
             }
         }
         if (isValid == false) {
-            let alertController = UIAlertController(title: nil, message: "Check your input!", preferredStyle: UIAlertControllerStyle.actionSheet)
+            let alertController = UIAlertController(title: nil, message: "Check your input", preferredStyle: UIAlertControllerStyle.actionSheet)
             let OKAction = UIAlertAction(title: "OK", style: .default)
             alertController.addAction(OKAction)
             self.present(alertController, animated: true)

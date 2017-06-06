@@ -53,11 +53,13 @@ class ExerciseGoalViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
-        earliestDate = formatter.string(from: Date())
-        let start_date = formatter.string(from: startDatePicker.date)
-        let end_date = formatter.string(from: endDatePicker.date)
+        let earlyDate = formatter.date(from: self.earliestDate)!
+        let start_date = startDatePicker.date
+        let end_date = endDatePicker.date
         if (start_date < end_date) {
-            if ((exerciseField.text?.characters.count)! > 0 && (start_date >= earliestDate)) {
+            print("reached in")
+            print(earlyDate)
+            if ((exerciseField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
                 isValid = true
             }
         }
@@ -74,7 +76,7 @@ class ExerciseGoalViewController: UIViewController {
         super.viewDidLoad()
         if self.exerciseType == "Distance" {
             self.exerciseLabel.text = "Distance (miles)"
-        } else if self.exerciseType == "Minutes" {
+        } else if self.exerciseType == "Time" {
             self.exerciseLabel.text = "Time (minutes)"
         } else if self.exerciseType == "Weight" {
             self.exerciseLabel.text = "Weight (lbs)"

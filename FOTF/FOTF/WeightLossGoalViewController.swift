@@ -14,13 +14,12 @@ class WeightLossGoalViewController: UIViewController {
     
     var ref: DatabaseReference?
     
-    // Weight loss goal type
     @IBOutlet weak var currentWeightField: UITextField!
     @IBOutlet weak var goalWeightField: UITextField!
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var endDatePicker: UIDatePicker!
 
-    var earliestDate: String = ""
+    var goalType: String = "WeightLoss"
     
     @IBAction func cancelCompose(_ sender: Any) {
         presentingViewController?.dismiss(animated: true, completion: nil)
@@ -37,14 +36,12 @@ class WeightLossGoalViewController: UIViewController {
             let end_date = formatter.string(from: endDatePicker.date)
             // Save this data to the database as a GOAL OBJECT
             let goalItem = Goal()
-            goalItem.type = "Weight Loss"
+            goalItem.type = self.goalType
             goalItem.currentWeight = self.currentWeightField.text!
             goalItem.goalWeight = self.goalWeightField.text!
             goalItem.start_date = start_date
             goalItem.end_date = end_date
-            self.ref?.child("goalEntry").child(currentUser).child("WeightLoss").setValue(goalItem.toAnyObject())
-            print(goalItem)
-            
+            self.ref?.child("goalEntry").child(currentUser).child(self.goalType).setValue(goalItem.toAnyObject())            
             presentingViewController?.dismiss(animated: true, completion: nil)
         }
         
@@ -55,20 +52,17 @@ class WeightLossGoalViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
-        earliestDate = formatter.string(from: Date())
-        let start_date = formatter.string(from: startDatePicker.date)
-        let end_date = formatter.string(from: endDatePicker.date)
+        let earlyDate = Date()
+        let start_date = startDatePicker.date
+        let end_date = endDatePicker.date
         if (start_date < end_date) {
-            if ((currentWeightField.text?.characters.count)! > 0 && (goalWeightField.text?.characters.count)! > 0 && (start_date >= earliestDate)) {
-                let current = currentWeightField.text!
-                let goal = goalWeightField.text!
-                if (Float(current) != nil && Float(goal) != nil) {
-                    isValid = true
-                }
+            print("reached in")
+            if ((currentWeightField.text?.characters.count)! > 0 && (goalWeightField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
+                isValid = true
             }
         }
         if (isValid == false) {
-            let alertController = UIAlertController(title: nil, message: "Check your input!", preferredStyle: UIAlertControllerStyle.actionSheet)
+            let alertController = UIAlertController(title: nil, message: "Check your input", preferredStyle: UIAlertControllerStyle.actionSheet)
             let OKAction = UIAlertAction(title: "OK", style: .default)
             alertController.addAction(OKAction)
             self.present(alertController, animated: true)

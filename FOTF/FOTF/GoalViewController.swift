@@ -64,20 +64,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
             var currentUser = (Auth.auth().currentUser?.email)!
             currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
             let goalItem = userGoalJournal[indexPath.row].type
-//            let query = ref?.child("goalEntry").child(currentUser).queryOrdered(byChild: "type").queryEqual(toValue: goalItem)
-            
-//            query?.observeSingleEvent(of: .value, with: { (snapshot) in
-//                if let deleteSnap = snapshot.value as? [String: AnyObject] {
-//                    var deleteID = ""
-//                    for (key, value) in deleteSnap {
-//                        deleteID = key
-//                        print(deleteID)
-//                    }
-//                    self.ref?.child("goalEntry").child(currentUser).child(deleteID).removeValue()
-//                }
-//            })
             self.ref?.child("goalEntry").child(currentUser).child(goalItem).removeValue()
-//            self.goalTableView.reloadData()
         }
     }
 
@@ -219,12 +206,14 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
             newGoalObjects.append(goalObject)
         }
         self.userGoalJournal = newGoalObjects
+        self.goalTableView.reloadData()
     }
     
     @IBAction func composeNewGoal(_ sender: Any) {
         let alertController = UIAlertController(title: "Goal Type", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         alertController.addAction(UIAlertAction(title: "Calorie Consumption", style:.default, handler: { (_) in
+            self.exerciseType = "Nutrition"
             self.performSegue(withIdentifier: "nutritionSegue", sender: self)
         }))
         
@@ -249,6 +238,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }))
         
         alertController.addAction(UIAlertAction(title: "Weight Loss", style:.default, handler: { (_) in
+            self.exerciseType = "WeightLoss"
             self.performSegue(withIdentifier: "weightLossSegue", sender: self)
         }))
         
@@ -267,7 +257,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else if segue.identifier == "nutritionSegue" {
             let vc = segue.destination as! NutritionGoalViewController
             vc.earliestDate = self.lastNutritionDay
-        }
+        } 
     }
     
     override func viewDidLoad() {
@@ -311,10 +301,10 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
                 print(self.userGoalJournal)
             }
+            self.processExercises()
+            self.processNutrition()
         })
-        self.processGoals()
-        self.processExercises()
-        self.processNutrition()
+        
         self.goalTableView.reloadData()
     }
 
