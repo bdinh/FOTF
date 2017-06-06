@@ -24,11 +24,10 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var lastNutritionDay: String = ""
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return goalObjects.count
+        return userGoalJournal.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let goalObject = self.userGoalJournal[indexPath.row]//self.goalObjects[indexPath.row]
         let cell = goalTableView.dequeueReusableCell(withIdentifier: "goalCell") as! GoalTableViewCell
         cell.typeGoal.text = goalObject.type
