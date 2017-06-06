@@ -101,7 +101,6 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
             foodItem.servingUnit = "\(info["nf_serving_size_unit"]!)"
             searchResults.append(foodItem)
         }
-        print(self.searchResults.count)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

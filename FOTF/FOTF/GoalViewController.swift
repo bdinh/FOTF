@@ -13,7 +13,10 @@ import FirebaseDatabase
 class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var goalTableView: UITableView!
+    
     var ref: DatabaseReference?
+    var userGoalJournal = [Goal]()
+    
     var goalObjects = [Goal]()
     var userExerciseJournal: [DateEntryExercise] = []
     var userFoodJournal: [DateEntryFood] = []
@@ -21,12 +24,11 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var lastNutritionDay: String = ""
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return goalObjects.count
+        return userGoalJournal.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let goalObject = self.goalObjects[indexPath.row]
+        let goalObject = self.userGoalJournal[indexPath.row]
         let cell = goalTableView.dequeueReusableCell(withIdentifier: "goalCell") as! GoalTableViewCell
         cell.typeGoal.text = goalObject.type
         cell.start_date.text = goalObject.start_date
@@ -42,6 +44,28 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
         
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            var currentUser = (Auth.auth().currentUser?.email)!
+            currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+            let goalItem = userGoalJournal[indexPath.row].type
+            let query = ref?.child("goalEntry").child(currentUser).queryOrdered(byChild: "type").queryEqual(toValue: goalItem)
+            
+            query?.observeSingleEvent(of: .value, with: { (snapshot) in
+                if let deleteSnap = snapshot.value as? [String: AnyObject] {
+                    var deleteID = ""
+                    for (key, value) in deleteSnap {
+                        deleteID = key
+                        print(deleteID)
+                    }
+                    self.ref?.child("goalEntry").child(currentUser).child(deleteID).removeValue()
+                }
+            })
+            self.goalTableView.reloadData()
+        }
+    }
+
     
     func processExercises() {
         var currentUser = (Auth.auth().currentUser?.email)!
@@ -105,7 +129,6 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
                                 newFoodEntry.qty = foodDetail["qty"]!
                                 newDate.foodList.append(newFoodEntry)
                             }
-                            
                         }
                     }
                     self.userFoodJournal.append(newDate)
@@ -119,7 +142,7 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func processGoals() {
         // Process goalObjecs data
         var newGoalObjects = [Goal]()
-        for goalObject in self.goalObjects {
+        for goalObject in self.userGoalJournal {
             if goalObject.type == "Exercise" {
                 if (goalObject.end_date > self.lastExerciseDay) {
                     self.lastExerciseDay = goalObject.end_date
@@ -162,25 +185,25 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             newGoalObjects.append(goalObject)
         }
-        self.goalObjects = newGoalObjects
+        self.userGoalJournal = newGoalObjects
     }
     
     // GET RID OF THIS WHEN THERE IS A LINK WITH THE DATABASE
-    func createMockData() {
-        let newGoal = Goal()
-        newGoal.type = "Exercise"
-        newGoal.distance = "20"
-        newGoal.start_date = "June 6, 2017"
-        newGoal.end_date = "June 8, 2017"
-        self.goalObjects.append(newGoal)
-        
-        let newGoal2 = Goal()
-        newGoal2.type = "Nutrition"
-        newGoal2.calories = "200"
-        newGoal2.start_date = "June 7, 2017"
-        newGoal2.end_date = "June 9, 2017"
-        self.goalObjects.append(newGoal2)
-    }
+//    func createMockData() {
+//        let newGoal = Goal()
+//        newGoal.type = "Exercise"
+//        newGoal.distance = "20"
+//        newGoal.start_date = "June 6, 2017"
+//        newGoal.end_date = "June 8, 2017"
+//        self.goalObjects.append(newGoal)
+//        
+//        let newGoal2 = Goal()
+//        newGoal2.type = "Nutrition"
+//        newGoal2.calories = "200"
+//        newGoal2.start_date = "June 7, 2017"
+//        newGoal2.end_date = "June 9, 2017"
+//        self.goalObjects.append(newGoal2)
+//    }
     
     
     @IBAction func composeNewGoal(_ sender: Any) {
@@ -215,6 +238,8 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        goalTableView.allowsMultipleSelectionDuringEditing = true
+        
         let currentDate = Date()
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -222,9 +247,29 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.lastExerciseDay = formatter.string(from: currentDate)
         self.lastNutritionDay = formatter.string(from: currentDate)
         
-        // CREATE MOCK DATA
-        self.createMockData()
-        // REPLACE MOCK DATA WITH DATA FROM THE DATABASE
+        var currentUser = (Auth.auth().currentUser?.email)!
+        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+        
+        ref = Database.database().reference()
+        ref?.child("goalEntry").child(currentUser).observe(.value, with: { (snapshot) in
+            self.userGoalJournal = []
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                for entry in dictionary {
+                    let newGoal = Goal()
+                    if let goalDetail = entry.value as? [String: String] {
+                        newGoal.calories = goalDetail["calories"]!
+                        newGoal.distance = goalDetail["distance"]!
+                        newGoal.end_date = goalDetail["enddate"]!
+                        newGoal.start_date = goalDetail["startdate"]!
+                        newGoal.progress = goalDetail["progress"]!
+                        newGoal.status = goalDetail["status"]!
+                        newGoal.type = goalDetail["type"]!
+                    }
+                    self.userGoalJournal.append(newGoal)
+                }
+                print(self.userGoalJournal)
+            }
+        })
         self.processExercises()
         self.processNutrition()
     }
