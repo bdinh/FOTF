@@ -30,7 +30,7 @@ class AerobicExerciseViewController: UIViewController {
     }
     
     @IBAction func finishCompose(_ sender: Any) {
-        var currentUser = Auth.auth().currentUser?.email as! String
+        var currentUser = (Auth.auth().currentUser?.email)!
         currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         if validateInput() {
             let exerciseItem = Exercise()

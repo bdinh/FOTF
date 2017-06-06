@@ -31,9 +31,6 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // Throws an error need fixing
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // MOCK DATA
-        var foodObject = Food()
-        foodObject = self.userFoodJournal[indexPath.section].foodList[indexPath.row]
         self.detailSelect = self.userFoodJournal[indexPath.section].foodList[indexPath.row]
         
 //        foodObject.calories = "120"
@@ -76,7 +73,7 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         foodTableView.allowsMultipleSelectionDuringEditing = true
         
-        var currentUser = Auth.auth().currentUser?.email as! String
+        var currentUser = (Auth.auth().currentUser?.email)!
         currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
         
         ref = Database.database().reference()
@@ -187,7 +184,7 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            var currentUser = Auth.auth().currentUser?.email as! String
+            var currentUser = (Auth.auth().currentUser?.email)!
             currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
             let foodItem = userFoodJournal[indexPath.section].foodList[indexPath.row].title
             let deletedate = userFoodJournal[indexPath.section].date
