@@ -252,11 +252,9 @@ class GoalViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Pass the selected object to the new view controller.
         if segue.identifier == "exerciseSegue" {
             let vc = segue.destination as! ExerciseGoalViewController
-            vc.earliestDate = self.lastExerciseDay
             vc.exerciseType = self.exerciseType
         } else if segue.identifier == "nutritionSegue" {
             let vc = segue.destination as! NutritionGoalViewController
-            vc.earliestDate = self.lastNutritionDay
         } 
     }
     
