@@ -60,10 +60,15 @@ class EditAccountViewController: UIViewController, UITextFieldDelegate {
     
     
     var ref: DatabaseReference?
-    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
         self.age.delegate = self
         self.weight.delegate = self
         self.height.delegate = self
