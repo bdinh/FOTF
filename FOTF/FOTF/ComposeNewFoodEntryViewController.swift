@@ -42,13 +42,21 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     }
     
     @IBAction func finishCompose(_ sender: Any) {
-        
-        var currentUser = (Auth.auth().currentUser?.email)!
-        currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
-        selectedItem.qty = self.currentQuantity.text!
-        self.ref?.child("foodEntry").child(currentUser).child(currentDate).childByAutoId().setValue(selectedItem.toAnyObject())
+        if self.selectedItem.brand != "" {
+            var currentUser = (Auth.auth().currentUser?.email)!
+            currentUser = currentUser.replacingOccurrences(of: ".", with: ",")
+            selectedItem.qty = self.currentQuantity.text!
+            self.ref?.child("foodEntry").child(currentUser).child(currentDate).childByAutoId().setValue(selectedItem.toAnyObject())
 
-        presentingViewController?.dismiss(animated: true, completion: nil)
+            presentingViewController?.dismiss(animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title: "Error", message: "Please select an item", preferredStyle: .alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
         
     }
     
@@ -85,21 +93,31 @@ class ComposeNewFoodEntryViewController: UIViewController, UITableViewDataSource
     func processResponse(response: DataResponse<Any>) {
         let dictionary = response.result.value as! NSDictionary
         
-        let hits = dictionary["hits"] as! [[String:Any]]
-        for hit in hits {
-            let foodItem = Food()
-            let info = hit["fields"] as! [String:Any]
-            foodItem.title = info["item_name"] as! String
-            foodItem.brand = info["brand_name"] as! String
-            foodItem.calories = "\(info["nf_calories"]!)"
-            foodItem.fat = "\(info["nf_total_fat"]!)"
-            foodItem.sodium = "\(info["nf_sodium"]!)"
-            foodItem.cholesterol = "\(info["nf_cholesterol"]!)"
-            foodItem.sugar = "\(info["nf_sugars"]!)"
-            foodItem.protein = "\(info["nf_protein"]!)"
-            foodItem.servingSize = "\(info["nf_serving_size_qty"]!)"
-            foodItem.servingUnit = "\(info["nf_serving_size_unit"]!)"
-            searchResults.append(foodItem)
+        let hits = dictionary["hits"] as? [[String:Any]]
+        if hits == nil {
+            // present view controller
+            let alertController = UIAlertController(title: "Error", message: "No results found", preferredStyle: .alert)
+            
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            for hit in hits! {
+                let foodItem = Food()
+                let info = hit["fields"] as! [String:Any]
+                foodItem.title = info["item_name"] as! String
+                foodItem.brand = info["brand_name"] as! String
+                foodItem.calories = "\(info["nf_calories"]!)"
+                foodItem.fat = "\(info["nf_total_fat"]!)"
+                foodItem.sodium = "\(info["nf_sodium"]!)"
+                foodItem.cholesterol = "\(info["nf_cholesterol"]!)"
+                foodItem.sugar = "\(info["nf_sugars"]!)"
+                foodItem.protein = "\(info["nf_protein"]!)"
+                foodItem.servingSize = "\(info["nf_serving_size_qty"]!)"
+                foodItem.servingUnit = "\(info["nf_serving_size_unit"]!)"
+                searchResults.append(foodItem)
+            }
         }
     }
     
