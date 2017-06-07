@@ -13,15 +13,14 @@ import FirebaseDatabase
 
 class AccountViewController: UIViewController {
 
-    @IBOutlet weak var profilePicture: UIImageView!
     var ref: DatabaseReference?
     override func viewDidLoad() {
         super.viewDidLoad()
-        profilePicture.layer.borderWidth = 2
-        profilePicture.layer.masksToBounds = false
-        profilePicture.layer.borderColor = UIColor.white.cgColor
-        profilePicture.layer.cornerRadius = profilePicture.frame.height/2
-        profilePicture.clipsToBounds = true
+//        profilePicture.layer.borderWidth = 2
+//        profilePicture.layer.masksToBounds = false
+//        profilePicture.layer.borderColor = UIColor.white.cgColor
+//        profilePicture.layer.cornerRadius = profilePicture.frame.height/2
+//        profilePicture.clipsToBounds = true
         loadCurrentUserInfo()
     }
     

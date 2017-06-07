@@ -269,7 +269,8 @@
 				TargetAttributes = {
 					6D34A2321ECE6E8700F7CCA1 = {
 						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 3QD5R84B86;
+						ProvisioningStyle = Automatic;
 					};
 					6D34A2481ECE6E8800F7CCA1 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -581,7 +582,8 @@
 			baseConfigurationReference = 30A06DD6734BB825B7C16E92 /* Pods-FOTF.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3QD5R84B86;
 				INFOPLIST_FILE = FOTF/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -597,7 +599,8 @@
 			baseConfigurationReference = 5B40344CDAE4BE6D7F73E0DD /* Pods-FOTF.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3QD5R84B86;
 				INFOPLIST_FILE = FOTF/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
