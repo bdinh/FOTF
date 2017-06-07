@@ -52,15 +52,18 @@ class WeightLossGoalViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
-        let earlyDate = Date()
         let start_date = startDatePicker.date
         let end_date = endDatePicker.date
-        if (start_date < end_date) {
-            print("reached in")
-            if ((currentWeightField.text?.characters.count)! > 0) { // && (goalWeightField.text?.characters.count)! > 0 && (start_date > earlyDate)) {
-                isValid = true
+        
+        if isStringFloat(string: currentWeightField.text!) && isStringFloat(string: goalWeightField.text!) {
+            if (start_date < end_date) {
+                print("reached in")
+                if ((currentWeightField.text?.characters.count)! > 0) {
+                    isValid = true
+                }
             }
         }
+        
         if (isValid == false) {
             let alertController = UIAlertController(title: nil, message: "Check your input", preferredStyle: UIAlertControllerStyle.actionSheet)
             let OKAction = UIAlertAction(title: "OK", style: .default)
@@ -68,6 +71,10 @@ class WeightLossGoalViewController: UIViewController {
             self.present(alertController, animated: true)
         }
         return isValid
+    }
+    
+    func isStringFloat(string: String) -> Bool {
+        return Float(string) != nil
     }
     
     

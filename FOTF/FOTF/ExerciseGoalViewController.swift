@@ -19,7 +19,6 @@ class ExerciseGoalViewController: UIViewController {
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var endDatePicker: UIDatePicker!
     
-    var earliestDate: String = ""
     var exerciseType: String = ""
     
     @IBAction func cancelCompose(_ sender: Any) {
@@ -53,15 +52,18 @@ class ExerciseGoalViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
-        let earlyDate = formatter.date(from: self.earliestDate)!
         let start_date = startDatePicker.date
         let end_date = endDatePicker.date
-        if (start_date < end_date) {
-            print("reached in")
-            if ((exerciseField.text?.characters.count)! > 0) {// && (start_date >= Date())) {//earlyDate)) {
-                isValid = true
+        
+        if isStringFloat(string: exerciseField.text!) {
+            if (start_date < end_date) {
+                print("reached in")
+                if ((exerciseField.text?.characters.count)! > 0) {// && (start_date >= Date())) {//earlyDate)) {
+                    isValid = true
+                }
             }
         }
+        
         if (isValid == false) {
             let alertController = UIAlertController(title: nil, message: "Check your input", preferredStyle: UIAlertControllerStyle.actionSheet)
             let OKAction = UIAlertAction(title: "OK", style: .default)
@@ -69,6 +71,10 @@ class ExerciseGoalViewController: UIViewController {
             self.present(alertController, animated: true)
         }
         return isValid
+    }
+    
+    func isStringFloat(string: String) -> Bool {
+        return Float(string) != nil
     }
     
     override func viewDidLoad() {

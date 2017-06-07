@@ -19,7 +19,6 @@ class NutritionGoalViewController: UIViewController {
     @IBOutlet weak var calorieField: UITextField!
     
     var goalType: String = "Nutrition"
-    var earliestDate: String = ""
     
     @IBAction func cancelCompose(_ sender: Any) {
         presentingViewController?.dismiss(animated: true, completion: nil)
@@ -54,14 +53,17 @@ class NutritionGoalViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
-        let earlyDate = formatter.date(from: self.earliestDate)!
         let start_date = startDatePicker.date
         let end_date = endDatePicker.date
-        if (start_date < end_date) {
-            if ((calorieField.text?.characters.count)! > 0) { // && (start_date > earlyDate)) {
-                isValid = true
+
+        if isStringFloat(string: calorieField.text!) {
+            if (start_date < end_date) {
+                if ((calorieField.text?.characters.count)! > 0) { // && (start_date > earlyDate)) {
+                    isValid = true
+                }
             }
         }
+        
         if (isValid == false) {
             let alertController = UIAlertController(title: nil, message: "Check your input", preferredStyle: UIAlertControllerStyle.actionSheet)
             let OKAction = UIAlertAction(title: "OK", style: .default)
@@ -71,13 +73,15 @@ class NutritionGoalViewController: UIViewController {
         return isValid
     }
 
+    func isStringFloat(string: String) -> Bool {
+        return Float(string) != nil
+    }
 
     override func viewDidLoad() {
         ref = Database.database().reference()
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        print(self.earliestDate)
     }
 
     override func didReceiveMemoryWarning() {
