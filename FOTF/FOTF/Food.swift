@@ -10,12 +10,12 @@ import Foundation
 
 class Food {
     var title: String = ""
-    var calories: String = ""
-    var fat: String = ""
-    var sodium: String = ""
-    var cholesterol: String = ""
-    var sugar: String = ""
-    var protein: String = ""
+    var calories: String = "0"
+    var fat: String = "0"
+    var sodium: String = "0"
+    var cholesterol: String = "0"
+    var sugar: String = "0"
+    var protein: String = "0"
     var servingSize: String = ""
     var servingUnit: String = ""
     var brand: String = ""

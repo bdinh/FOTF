@@ -138,16 +138,16 @@ class FoodViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         calories += addedCal
                     }
                     if entry.sugar != "<null>" {
-                        sugar += Double(entry.sugar)!
+                        sugar += Double(entry.qty)! * Double(entry.sugar)!
                     }
                     if entry.cholesterol != "<null>" {
-                        cholesterol += Double(entry.cholesterol)!
+                        cholesterol +=  Double(entry.qty)! * Double(entry.cholesterol)!
                     }
                     if entry.fat != "<null>" {
-                        fat += Double(entry.fat)!
+                        fat +=  Double(entry.qty)! * Double(entry.fat)!
                     }
                     if entry.sodium != "<null>" {
-                        sodium += Double(entry.sodium)!
+                        sodium += Double(entry.qty)! * Double(entry.sodium)!
                     }
                 }
 

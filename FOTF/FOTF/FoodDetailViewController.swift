@@ -80,15 +80,29 @@ class FoodDetailViewController: UIViewController {
             if Double(quantity)! > 1.0 {
                 servingString = "servings"
             }
+            
             self.titleField.text = self.foodObject!.title
             self.brandName.text = self.foodObject!.brand
             self.servingSize.text = "\(self.foodObject!.servingSize) \(self.foodObject!.servingUnit) - \(quantity) \(servingString)"
-            self.calorieField.text = "\(Double(quantity)! * Double(self.foodObject!.calories)!) kcal"
-            self.fatField.text = "\(Double(quantity)! * Double(self.foodObject!.fat)!) grams"
-            self.sodiumField.text = "\(Double(quantity)! * Double(self.foodObject!.sodium)!) milligrams"
-            self.cholesterolField.text = "\(Double(quantity)! * Double(self.foodObject!.cholesterol)!) milligrams"
-            self.sugarField.text = "\(Double(quantity)! * Double(self.foodObject!.sugar)!) grams"
-            self.proteinField.text = "\(Double(quantity)! * Double(self.foodObject!.protein)!) grams"
+            
+            if self.foodObject!.calories != "<null>" {
+                self.calorieField.text = "\(Double(quantity)! * Double(self.foodObject!.calories)!) kcal"
+            }
+            if self.foodObject!.sugar != "<null>" {
+                self.sugarField.text = "\(Double(quantity)! * Double(self.foodObject!.sugar)!) grams"
+            }
+            if self.foodObject!.cholesterol != "<null>" {
+                self.cholesterolField.text = "\(Double(quantity)! * Double(self.foodObject!.cholesterol)!) milligrams"
+            }
+            if self.foodObject!.fat != "<null>" {
+                self.fatField.text = "\(Double(quantity)! * Double(self.foodObject!.fat)!) grams"
+            }
+            if self.foodObject!.sodium != "<null>" {
+                self.sodiumField.text = "\(Double(quantity)! * Double(self.foodObject!.sodium)!) milligrams"
+            }
+            if self.foodObject!.protein != "<null>" {
+                 self.proteinField.text = "\(Double(quantity)! * Double(self.foodObject!.protein)!) grams"
+            }
             
         }
     }
